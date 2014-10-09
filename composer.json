@@ -1,0 +1,12 @@
+{
+  "name":"go1/aduro/tincan",
+  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "GO1\\Aduro\\TinCan\\": "src"
+    }
+  },
+  "require": {
+    "rusticisoftware/tincan": "~0.0" 
+  }
+}
