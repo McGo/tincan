@@ -5,35 +5,39 @@ namespace GO1\Aduro\TinCan;
 class TinCanPackage implements TinCanPackageInterface {
 
   protected $manifest;
-  protected $filePath;
+  protected $schemaFile;
 
-  public function __construct($xmlFilePath) {
-    $this->filePath = $xmlFilePath;
+  public function __construct($schemaFile) {
+    $this->schemaFile = $schemaFile;
   }
 
 
-  public function getFilePath() {
-    return $this->filePath;
+  public function getSchemaFile() {
+    return $this->schemaFile;
+  }
+  
+  public function getManifest() {
+    return $this->manifest;
   }
 
   /**
    * Parse tincan.xml to array.
    * @return type
    */
-  protected function parseManifest() {
-    $content = simplexml_load_file($this->getFilePath());
+  public function parseManifest() {
+    $content = simplexml_load_file($this->getSchemaFile());
     $this->manifest = json_decode(json_encode($content), TRUE);
     return $this->manifest;
   }
   
-  protected function getActivities() {
+  public function getActivities() {
     $this->parseManifest();
-    return isset($this->manifest->activities) ? $this->manifest->activities : array();
+    return isset($this->manifest['activities']) ? $this->manifest['activities'] : array();
   }
   
-  protected function getProvider() {
+  public function getProvider() {
     $this->parseManifest();
-    return isset($this->manifest->provider) ? $this->manifest->provider : array();
+    return isset($this->manifest['provider']) ? $this->manifest['provider'] : array();
   }
   
   

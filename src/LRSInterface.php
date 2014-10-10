@@ -10,9 +10,9 @@ interface LRSInterface {
 
   function getAuth();
 
-  function setEndpoint();
+  function setEndpoint($endpoint);
 
-  function setVersion();
+  function setVersion($version);
 
-  function setAuth();
+  function setAuth($auth);
 }

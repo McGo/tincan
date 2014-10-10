@@ -3,6 +3,7 @@
 namespace GO1\Aduro\TinCan;
 
 use TinCan\RemoteLRS;
+use TinCan\Agent;
 use GO1\Aduro\TinCan\TinCanManagerInterface;
 use GO1\Aduro\TinCan\LRSInterface;
 use GO1\Aduro\TinCan\TinCanPackageInterface;
@@ -11,8 +12,6 @@ use GO1\Aduro\TinCan\TinCanPackage;
 class TinCanManager extends RemoteLRS implements TinCanManagerInterface {
 
   protected $lrs;
-  protected $package;
-  protected $extractPath;
 
   function __construct(LRSInterface $lrs) {
     $this->lrs = $lrs;
@@ -23,13 +22,14 @@ class TinCanManager extends RemoteLRS implements TinCanManagerInterface {
    * Extract tincan zip file to specify directory.
    * @return boolean
    */
-  protected function unZip($filePath, $extractPath) {
-    $this->$extractPath = $extractPath;
+    public function createPackageDirectory($archiveFile, $dirPath) {
     $zip = new \ZipArchive;
-    if ($zip->open($filePath) === TRUE) {
-      $zip->extractTo($this->$extractPath);
+    if ($zip->open($archiveFile) === TRUE) {
+      $zip->extractTo($dirPath);
       $zip->close();
-      return TRUE;
+      
+      $schemaFile = $dirPath . '/tincan.xml';
+      return $this->loadTinCanPackage($schemaFile);
     }
     return FALSE;
   }
@@ -39,8 +39,7 @@ class TinCanManager extends RemoteLRS implements TinCanManagerInterface {
    * @param Agent $agent
    * @return boolean
    */
-  public function launch(Agent $agent) {
-    $package = new TinCanPackage($this->extractPath . '/tincan.xml');
+  public function buildLaunchUrl($basePath, TinCanPackageInterface $package, Agent $agent) {
     foreach ($package->getActivities() as $activity) {
       // Looking for main activity of package.
       if (isset($activity['launch'])) {
@@ -51,20 +50,26 @@ class TinCanManager extends RemoteLRS implements TinCanManagerInterface {
           "mbox" => $agent->getMbox(),
         );
         $params['activity_id'] = $activity['@attributes']['id'];
-        $query_string = $this->buidQuery($params);
-        return $activity['launch'] . '?' . $query_string;
+        $query_string = $this->buildLaunchQueryString($params);
+        return $basePath . '/' . $activity['launch'] . '?' . $query_string;
       }
     }
     return FALSE;
   }
+  
+
+  function loadTinCanPackage($schemaFile) {
+    return new TinCanPackage($schemaFile);
+  }
+  
 
   /**
    * Handle verify tincan.xml base on tincan.xsd
    * @return boolean
    */
-  public function verify() {
+  public function validateTinCanSchema($schemaFile) {
     $xml = new \DOMDocument();
-    $xml->load($this->extractPath . '/tincan.xml');
+    $xml->load($schemaFile);
 
     if (!$xml->schemaValidate(__DIR__ . '/static/tincan.xsd')) {
       return array(
@@ -81,7 +86,7 @@ class TinCanManager extends RemoteLRS implements TinCanManagerInterface {
    * @param type $parent
    * @return type
    */
-  protected function buidQuery(array $query, $parent = '') {
+  protected function buildLaunchQueryString(array $query, $parent = '') {
     $params = array();
 
     foreach ($query as $key => $value) {
@@ -89,7 +94,7 @@ class TinCanManager extends RemoteLRS implements TinCanManagerInterface {
 
       // Recurse into children.
       if (is_array($value)) {
-        $params[] = $this->buidQuery($value, $key);
+        $params[] = $this->buildLaunchQueryString($value, $key);
       }
       // If a query parameter value is NULL, only append its key.
       elseif (!isset($value)) {

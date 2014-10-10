@@ -8,5 +8,7 @@ interface TinCanPackageInterface {
 
   function getProvider();
 
-  function getFilePath();
+  function getSchemaFile();
+  
+  function getManifest();
 }
