@@ -4,6 +4,7 @@ namespace GO1\Aduro\TinCan;
 
 use GO1\Aduro\TinCan\LRSInterface;
 use TinCan\RemoteLRS;
+use TinCan\Version;
 
 class LRS extends RemoteLRS implements LRSInterface {
 
@@ -15,6 +16,7 @@ class LRS extends RemoteLRS implements LRSInterface {
     $this->endpoint = $endpoint;
     $this->username = $username;
     $this->password = $password;
+    $this->setVersion(Version::latest());
     $this->setAuth();
   }
 
