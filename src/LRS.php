@@ -7,37 +7,41 @@ use GO1\Aduro\TinCan\LRSInterface;
 class LRS implements LRSInterface {
 
   protected $endpoint;
-  protected $version;
-  protected $auth;
+  protected $username;
+  protected $password;
 
-  function __construct($endpoint, $version, $auth) {
+  function __construct($endpoint, $username, $password) {
     $this->endpoint = $endpoint;
-    $this->version = $version;
-    $this->auth = $auth;
+    $this->username = $username;
+    $this->password = $password;
   }
 
   public function getEndpoint() {
     return $this->endpoint;
   }
 
-  public function getAuth() {
-    return $this->auth;
+  public function getUsername() {
+    return $this->username;
+  }
+  
+  public function getPassword() {
+    return $this->password;
   }
 
-  public function getVersion() {
-    return $this->version;
-  }
-
-  public function setAuth($auth) {
-    $this->auth = $auth;
+  public function setPassword($password) {
+    $this->password = $password;
   }
 
   public function setEndpoint($endpoint) {
     $this->endpoint = $endpoint;
   }
 
-  public function setVersion($version) {
-    $this->version = $version;
+  public function setUserName($username) {
+    $this->username = $username;
+  }
+  
+  public function getAuth() {
+    return 'Basic ' . base64_encode($this->getUsername() . ':' . $this->getPassword());
   }
 
 }

@@ -15,7 +15,8 @@ class TinCanManager extends RemoteLRS implements TinCanManagerInterface {
 
   function __construct(LRSInterface $lrs) {
     $this->lrs = $lrs;
-    parent::__construct($lrs->getEndpoint(), $lrs->getVersion(), $lrs->getAuth());
+    $this->setEndpoint($lrs->getEndpoint());
+    $this->setAuth($lrs->getAuth());
   }
   
     /**

@@ -9,8 +9,7 @@ use TinCan\Agent;
 class TinCanManageTest extends \PHPUnit_Framework_TestCase {
   
   static private $endpoint = 'http://cloud.scorm.com/tc/3HYPTQLAI9/sandbox';
-  static private $version  = '1.0.1';
-  static private $auth = 'auth token';
+  static private $username = '';
   static private $password = '';
 
 
@@ -21,7 +20,7 @@ class TinCanManageTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->archiveFile    = __DIR__ . '/fixtures/GolfExample_TCAPI.zip';
     $this->dirPath = '/tmp/' . uniqid();
-    $this->lrs = new LRS(self::$endpoint, self::$version, self::$auth);
+    $this->lrs = new LRS(self::$endpoint, self::$username, self::$password);
     $this->manage = new TinCanManager($this->lrs);
   }
 
