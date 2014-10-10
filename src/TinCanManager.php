@@ -9,14 +9,12 @@ use GO1\Aduro\TinCan\LRSInterface;
 use GO1\Aduro\TinCan\TinCanPackageInterface;
 use GO1\Aduro\TinCan\TinCanPackage;
 
-class TinCanManager extends RemoteLRS implements TinCanManagerInterface {
+class TinCanManager implements TinCanManagerInterface {
 
   protected $lrs;
 
   function __construct(LRSInterface $lrs) {
     $this->lrs = $lrs;
-    $this->setEndpoint($lrs->getEndpoint());
-    $this->setAuth($lrs->getAuth());
   }
   
     /**

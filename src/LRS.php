@@ -3,8 +3,9 @@
 namespace GO1\Aduro\TinCan;
 
 use GO1\Aduro\TinCan\LRSInterface;
+use TinCan\RemoteLRS;
 
-class LRS implements LRSInterface {
+class LRS extends RemoteLRS implements LRSInterface {
 
   protected $endpoint;
   protected $username;
@@ -14,10 +15,7 @@ class LRS implements LRSInterface {
     $this->endpoint = $endpoint;
     $this->username = $username;
     $this->password = $password;
-  }
-
-  public function getEndpoint() {
-    return $this->endpoint;
+    $this->setAuth();
   }
 
   public function getUsername() {
@@ -32,16 +30,12 @@ class LRS implements LRSInterface {
     $this->password = $password;
   }
 
-  public function setEndpoint($endpoint) {
-    $this->endpoint = $endpoint;
-  }
-
   public function setUserName($username) {
     $this->username = $username;
   }
   
-  public function getAuth() {
-    return 'Basic ' . base64_encode($this->getUsername() . ':' . $this->getPassword());
+  public function setAuth() {
+    $this->auth = 'Basic ' . base64_encode($this->getUsername() . ':' . $this->getPassword());
   }
 
 }
