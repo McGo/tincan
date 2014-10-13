@@ -2,12 +2,7 @@
 
 namespace GO1\Aduro\TinCan;
 
-use TinCan\RemoteLRS;
 use TinCan\Agent;
-use GO1\Aduro\TinCan\TinCanManagerInterface;
-use GO1\Aduro\TinCan\LRSInterface;
-use GO1\Aduro\TinCan\TinCanPackageInterface;
-use GO1\Aduro\TinCan\TinCanPackage;
 
 class TinCanManager implements TinCanManagerInterface {
 
