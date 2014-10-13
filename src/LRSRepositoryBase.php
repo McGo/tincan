@@ -36,7 +36,8 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
   public function getStatementById($statementID) {
     $response = $this->doGetStatements('statements', array('statementId' => $statementID));
     $statements = $this->parse->parse($response);
-    return !empty($statements) ? reset($statements) : FALSE;;
+    return !empty($statements) ? reset($statements) : FALSE;
+    ;
   }
 
   /**
@@ -63,13 +64,10 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
     return $this->parse->parse($response);
   }
 
-  private function doGetStatements($url, array $urlParameters = array()) {
-    $this->httpClient;
-    if (count($urlParameters) > 0) {
-      $url .= '?' . http_build_query($urlParameters);
-    }
+  private function doGetStatements($url, array $parameters = array()) {
     try {
-      $reponse = $this->httpClient->get($url, [
+      // Build request
+      $request = $this->httpClient->createRequest('GET', $url, [
         'headers' => [
           'X-Experience-API-Version' => $this->lrs->getVersion(),
           'Content-Type' => 'application/json',
@@ -80,6 +78,14 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
         ]
       ]);
       
+      // Buidl parameters
+      $query = $request->getQuery();
+      foreach ($parameters as $name => $value) {
+        $query->set($name, $value);
+      }
+      
+      // Send request
+      $reponse = $this->httpClient->send($request);
       if ($reponse->getStatusCode() == '200') {
         $content = $reponse->getBody()->getContents();
         return $content;
