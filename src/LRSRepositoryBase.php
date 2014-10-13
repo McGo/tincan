@@ -27,7 +27,8 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
       'activity' => $object,
     );
     $response = $this->doGetStatements('statements', $params);
-    $statements = $response->statements;
+    $statements = $this->parse($response);
+    return !empty($statements) ? reset($statements) : FALSE;
   }
 
   /**
@@ -37,7 +38,6 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
     $response = $this->doGetStatements('statements', array('statementId' => $statementID));
     $statements = $this->parse($response);
     return !empty($statements) ? reset($statements) : FALSE;
-    ;
   }
 
   /**
