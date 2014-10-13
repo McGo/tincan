@@ -9,10 +9,12 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
 
   protected $httpClient;
   protected $lrs;
+  protected $parse;
 
-  public function __construct(ClientInterface $httpClient, LRS $lrs) {
+  public function __construct(ClientInterface $httpClient, LRS $lrs, StatementParserBase $parse) {
     $this->httpClient = $httpClient;
     $this->lrs = $lrs;
+    $this->parse = $parse;
   }
 
   /**
@@ -33,8 +35,8 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    */
   public function getStatementById($statementID) {
     $response = $this->doGetStatements('statements', array('statementId' => $statementID));
-    $statements = $response->statements;
-    return !empty($statements) ? Statement::fromJSON(json_encode(reset($statements))) : FALSE;
+    $statements = $this->parse->parse($response);
+    return !empty($statements) ? reset($statements) : FALSE;;
   }
 
   /**
@@ -42,7 +44,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    */
   public function getStatementsHasActor($actor, $conditions = array()) {
     $response = $this->doGetStatements('statements', array('agent' => $actor));
-    return $response->statements;
+    return $this->parse->parse($response);
   }
 
   /**
@@ -50,7 +52,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    */
   public function getStatementsHasObject($object, $conditions = array()) {
     $response = $this->doGetStatements('statements', array('activity' => $object));
-    return $response->statements;
+    return $this->parse->parse($response);
   }
 
   /**
@@ -58,7 +60,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    */
   public function getStatementsHasVerb($verbID, $conditions = array()) {
     $response = $this->doGetStatements('statements', array('verb' => $verbID));
-    return $response->statements;
+    return $this->parse->parse($response);
   }
 
   private function doGetStatements($url, array $urlParameters = array()) {
@@ -80,7 +82,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
       
       if ($reponse->getStatusCode() == '200') {
         $content = $reponse->getBody()->getContents();
-        return \GuzzleHttp\json_decode($content);
+        return $content;
       }
     }
     catch (Exception $ex) {

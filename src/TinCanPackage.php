@@ -5,8 +5,10 @@ namespace GO1\Aduro\TinCan;
 class TinCanPackage implements TinCanPackageInterface {
 
   protected $manifest;
+  protected $schemaFile;
 
   public function __construct($schemaFile) {
+    $this->schemaFile = $schemaFile;
     $this->setManifest($this->parseManifest($schemaFile));
   }
 
@@ -39,6 +41,10 @@ class TinCanPackage implements TinCanPackageInterface {
    */
   public function setManifest($manifest = array()) {
     $this->manifest = $manifest;
+  }
+  
+  public function getSchemaFile() {
+    return $this->schemaFile;
   }
 
 }

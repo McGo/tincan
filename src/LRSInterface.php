@@ -26,6 +26,6 @@ interface LRSInterface {
    * @param string $username
    * @param string $password
    */
-  function setAuth($username, $password);
+  function setAuth();
   
 }

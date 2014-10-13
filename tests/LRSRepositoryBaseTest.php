@@ -19,10 +19,12 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
   protected function setUp() {
     $this->lrs = new LRS(self::$endpoint, self::$username, self::$password);
     $this->client = new Client(['base_url' => $this->lrs->getEndpoint()]);
-    $this->lrsRepo = new LRSRepositoryBase($this->client, $this->lrs);
+    $this->parse = new \GO1\Aduro\TinCan\StatementParserBase();
+    $this->lrsRepo = new LRSRepositoryBase($this->client, $this->lrs, $this->parse);
   }
 
   public function testGetStatement() {
+    return;
     $obj = new Agent(
         [ 'mbox' => 'duy.nguyen@go1.com.au']
     );
@@ -33,7 +35,6 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
     $verbId = 'http://adlnet.gov/expapi/verbs/experienced';
     $activity = 'http://tincanapi.com/GolfExample_TCAPI/Playing/Playing.html';
     $statement = $this->lrsRepo->getStatement(json_encode($params), $verbId, $activity);
-    print_r($statement);
   }
   
   public function testgGetStatementById() {
