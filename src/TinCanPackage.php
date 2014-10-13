@@ -18,8 +18,9 @@ class TinCanPackage implements TinCanPackageInterface {
    */
   public function parseManifest($schemaFile) {
     $content = simplexml_load_file($schemaFile);
-    //@todo is this correct way to parse xml file ?
-    return json_decode(json_encode($content), TRUE);
+    // Let json parse xml to array()
+    $content = json_encode($content);
+    return json_decode($content, TRUE);
   }
   
   /**
