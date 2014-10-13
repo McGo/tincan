@@ -9,12 +9,12 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
 
   protected $httpClient;
   protected $lrs;
-  protected $parse;
+  protected $parser;
 
-  public function __construct(ClientInterface $httpClient, LRS $lrs, StatementParserBase $parse) {
+  public function __construct(ClientInterface $httpClient, LRS $lrs, StatementParserInterface $parser) {
     $this->httpClient = $httpClient;
     $this->lrs = $lrs;
-    $this->parse = $parse;
+    $this->parser = $parser;
   }
 
   /**
@@ -35,7 +35,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    */
   public function getStatementById($statementID) {
     $response = $this->doGetStatements('statements', array('statementId' => $statementID));
-    $statements = $this->parse->parse($response);
+    $statements = $this->parse($response);
     return !empty($statements) ? reset($statements) : FALSE;
     ;
   }
@@ -45,7 +45,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    */
   public function getStatementsHasActor($actor, $conditions = array()) {
     $response = $this->doGetStatements('statements', array('agent' => $actor));
-    return $this->parse->parse($response);
+    return $this->parse($response);
   }
 
   /**
@@ -53,7 +53,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    */
   public function getStatementsHasObject($object, $conditions = array()) {
     $response = $this->doGetStatements('statements', array('activity' => $object));
-    return $this->parse->parse($response);
+    return $this->parse($response);
   }
 
   /**
@@ -61,7 +61,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    */
   public function getStatementsHasVerb($verbID, $conditions = array()) {
     $response = $this->doGetStatements('statements', array('verb' => $verbID));
-    return $this->parse->parse($response);
+    return $this->parse($response);
   }
 
   private function doGetStatements($url, array $parameters = array()) {
@@ -94,6 +94,10 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
     catch (Exception $ex) {
       throw new Exception($ex->getMessage());
     }
+  }
+  
+  public function parse($json) {
+    return $this->parser->parse($json);
   }
 
 }
