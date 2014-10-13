@@ -14,5 +14,9 @@ class LRS extends RemoteLRS implements LRSInterface {
     $this->setEndpoint($endpoint);
     $this->setAuth($username, $password);
   }
+  
+  public function setAuth($username, $password) {
+    $this->auth = 'Basic ' . base64_encode($username . ':' . $password);
+  }
 
 }
