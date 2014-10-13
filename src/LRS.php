@@ -4,40 +4,19 @@ namespace GO1\Aduro\TinCan;
 
 use GO1\Aduro\TinCan\LRSInterface;
 use TinCan\RemoteLRS;
-use TinCan\Version;
 
+/**
+ * @todo remove extending of RemoteLRS
+ */
 class LRS extends RemoteLRS implements LRSInterface {
 
-  protected $endpoint;
-  protected $username;
-  protected $password;
-
   function __construct($endpoint, $username, $password) {
-    $this->endpoint = $endpoint;
-    $this->username = $username;
-    $this->password = $password;
-    $this->setVersion(Version::latest());
-    $this->setAuth();
-  }
-
-  public function getUsername() {
-    return $this->username;
+    $this->setEndpoint($endpoint);
+    $this->setAuth($username, $password);
   }
   
-  public function getPassword() {
-    return $this->password;
-  }
-
-  public function setPassword($password) {
-    $this->password = $password;
-  }
-
-  public function setUserName($username) {
-    $this->username = $username;
-  }
-  
-  public function setAuth() {
-    $this->auth = 'Basic ' . base64_encode($this->getUsername() . ':' . $this->getPassword());
+  public function setAuth($username, $password) {
+    $this->auth = 'Basic ' . base64_encode($username . ':' . $password);
   }
 
 }

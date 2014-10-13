@@ -22,7 +22,21 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
     $this->lrsRepo = new LRSRepositoryBase($this->client, $this->lrs);
   }
 
-  public function testgGetStatement() {
+  public function testGetStatement() {
+    $obj = new Agent(
+        [ 'mbox' => 'duy.nguyen@go1.com.au']
+    );
+    $params = array(
+      'objectType' => $obj->getObjectType(),
+      'mbox' => $obj->getMbox(),
+    );
+    $verbId = 'http://adlnet.gov/expapi/verbs/experienced';
+    $activity = 'http://tincanapi.com/GolfExample_TCAPI/Playing/Playing.html';
+    $statement = $this->lrsRepo->getStatement(json_encode($params), $verbId, $activity);
+    print_r($statement);
+  }
+  
+  public function testgGetStatementById() {
     $statement = $this->lrsRepo->getStatementById('28ed1312-95ee-4241-b3fa-86e4bee68d07');
     $this->assertEquals($statement->getId(), '28ed1312-95ee-4241-b3fa-86e4bee68d07');
   }

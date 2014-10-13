@@ -1,9 +1,6 @@
 <?php
 
 namespace GO1\Aduro\TinCan;
-use TinCan\Agent;
-use TinCan\Verb;
-use TinCan\Activity;
 
 interface LRSRepositoryInterface {
   
@@ -22,7 +19,7 @@ interface LRSRepositoryInterface {
    * id can be activity IRI / inverse functional identifier / NO ID supplied / UUID
    * @return string json format
    */
-  function getStatement(Agent $actor, Verb $verbID, Activity $object);
+  function getStatement($actor, $verbID, $object);
   
   /**
    * 

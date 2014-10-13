@@ -4,11 +4,20 @@ namespace GO1\Aduro\TinCan;
 
 interface TinCanPackageInterface {
 
+  /**
+   * @return array activities
+   */
   function getActivities();
-
-  function getProvider();
-
-  function getSchemaFile();
   
+  /**
+   * @return array parsed array structure of tincan.xml
+   */
   function getManifest();
+  
+  /**
+   * 
+   * @param array $manifest
+   */
+  function setManifest($manifest = array());
+  
 }

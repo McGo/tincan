@@ -3,9 +3,6 @@
 namespace GO1\Aduro\TinCan;
 
 use GuzzleHttp\ClientInterface;
-use TinCan\Agent;
-use TinCan\Verb;
-use TinCan\Activity;
 use TinCan\Statement;
 
 class LRSRepositoryBase implements LRSRepositoryInterface {
@@ -21,13 +18,14 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
   /**
    * @{inheritdoc}
    */
-  public function getStatement(Agent $actor, Verb $verb, Activity $object) {
+  public function getStatement($actor, $verb, $object) {
     $params = array(
-      'agent' => $actor->getMbox(),
-      'verb' => $verb->getId(),
-      'activity' => $object->getId(),
+      'agent' => $actor,
+      'verb' => $verb,
+      'activity' => $object,
     );
-    return $this->doGetStatements('statements', $params);
+    $response = $this->doGetStatements('statements', $params);
+    $statements = $response->statements;
   }
 
   /**
@@ -68,7 +66,6 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
     if (count($urlParameters) > 0) {
       $url .= '?' . http_build_query($urlParameters);
     }
-    print_r(array($url));
     try {
       $reponse = $this->httpClient->get($url, [
         'headers' => [
