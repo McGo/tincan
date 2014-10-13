@@ -6,15 +6,9 @@ interface LRSInterface {
 
   function getEndpoint();
 
-  function getUsername();
+  function setEndpoint($endpoint);
   
-  function getPassword();
-
   function getAuth();
 
-  function setEndpoint($endpoint);
-
-  function setUserName($username);
-
-  function setPassword($password);
+  function setAuth($password);
 }
