@@ -17,15 +17,30 @@ interface LRSInterface {
   function setEndpoint($endpoint);
   
   /**
-   * @return string HTTP basic access authentication
+   * Get user name to access to LRS
    */
-  function getAuth();
+  function getUsername();
+  
+  /**
+   * Get password to authen to LRS
+   */
+  function getPassword();
+  
+  /**
+   * Get version tincan API
+   */
+  function getVersion();
+  
+  
+  /**
+   * Set version will be use for LRS
+   * @param type $version
+   */
+  function setVersion($version);
 
   /**
-   * Set HTTP basic access authentication
-   * @param string $username
-   * @param string $password
+   * Get authentication string(basic authentication)
    */
-  function setAuth($username, $password);
-  
+  function getAuth();
+    
 }

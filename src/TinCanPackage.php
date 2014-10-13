@@ -5,8 +5,10 @@ namespace GO1\Aduro\TinCan;
 class TinCanPackage implements TinCanPackageInterface {
 
   protected $manifest;
+  protected $schemaFile;
 
   public function __construct($schemaFile) {
+    $this->schemaFile = $schemaFile;
     $this->setManifest($this->parseManifest($schemaFile));
   }
 
@@ -16,8 +18,9 @@ class TinCanPackage implements TinCanPackageInterface {
    */
   public function parseManifest($schemaFile) {
     $content = simplexml_load_file($schemaFile);
-    //@todo is this correct way to parse xml file ?
-    return json_decode(json_encode($content), TRUE);
+    // Let json parse xml to array()
+    $content = json_encode($content);
+    return json_decode($content, TRUE);
   }
   
   /**
@@ -39,6 +42,10 @@ class TinCanPackage implements TinCanPackageInterface {
    */
   public function setManifest($manifest = array()) {
     $this->manifest = $manifest;
+  }
+  
+  public function getSchemaFile() {
+    return $this->schemaFile;
   }
 
 }
