@@ -11,27 +11,27 @@ class TinCanManager implements TinCanManagerInterface {
   function __construct(LRSInterface $lrs) {
     $this->lrs = $lrs;
   }
-  
-    /**
+
+  /**
    * Extract tincan zip file to specify directory.
-   * @return boolean
+   * @return TinCanPackage|NULL
    */
-    public function createPackageDirectory($archiveFile, $dirPath) {
+  public function createPackageDirectory($archiveFile, $dirPath) {
     $zip = new \ZipArchive;
     if ($zip->open($archiveFile) === TRUE) {
       $zip->extractTo($dirPath);
       $zip->close();
-      
+
       $schemaFile = $dirPath . '/tincan.xml';
       return $this->loadTinCanPackage($schemaFile);
     }
-    return FALSE;
+    return NULL;
   }
 
   /**
    * Get url to launch package from agent
    * @param Agent $agent
-   * @return boolean
+   * @return string
    */
   public function buildLaunchUrl($basePath, TinCanPackageInterface $package, Agent $agent) {
     foreach ($package->getActivities() as $activity) {
@@ -48,17 +48,21 @@ class TinCanManager implements TinCanManagerInterface {
         return $basePath . '/' . $activity['launch'] . '?' . $query_string;
       }
     }
-    return FALSE;
+    return '';
   }
-  
 
+  /**
+   * 
+   * @param string $schemaFile path to tincan.xml
+   * @return TinCanPackage
+   */
   function loadTinCanPackage($schemaFile) {
     return new TinCanPackage($schemaFile);
   }
-  
 
   /**
-   * Handle verify tincan.xml base on tincan.xsd
+   * 
+   * @param string $schemaFile path to tincan.xml
    * @return boolean
    */
   public function validateTinCanSchema($schemaFile) {
@@ -66,10 +70,7 @@ class TinCanManager implements TinCanManagerInterface {
     $xml->load($schemaFile);
 
     if (!$xml->schemaValidate(__DIR__ . '/static/tincan.xsd')) {
-      return array(
-        'error' => TRUE,
-        'messages' => libxml_get_errors()
-      );
+      return FALSE;
     }
     return TRUE;
   }
@@ -93,8 +94,7 @@ class TinCanManager implements TinCanManagerInterface {
       // If a query parameter value is NULL, only append its key.
       elseif (!isset($value)) {
         $params[] = $key;
-      }
-      else {
+      } else {
         // For better readability of paths in query strings, we decode slashes.
         $params[] = $key . '=' . str_replace('%2F', '/', rawurlencode($value));
       }
