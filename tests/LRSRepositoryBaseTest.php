@@ -81,6 +81,7 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
     $statements = $this->lrsRepo->getStatementsHasActor(json_encode($params));
     $this->assertEquals(3, count($statements));
     foreach ($statements as $statement) {
+      $this->assertEquals('mailto:' . $mbox, $statement->getActor()->getMbox());
       $this->assertInstanceOf('TinCan\Statement', $statement);
     }
   }
@@ -95,6 +96,7 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
     $statements = $this->lrsRepo->getStatementsHasVerb($verbId);
     $this->assertEquals(4, count($statements));
     foreach ($statements as $statement) {
+      $this->assertEquals($verbId, $statement->getVerb()->getId());
       $this->assertInstanceOf('TinCan\Statement', $statement);
     }
   }
@@ -107,6 +109,7 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
     $statements = $this->lrsRepo->getStatementsHasObject($object);
     $this->assertEquals(2, count($statements));
     foreach ($statements as $statement) {
+      $this->assertEquals($object, $statement->getObject()->getId());
       $this->assertInstanceOf('TinCan\Statement', $statement);
     }
   }
