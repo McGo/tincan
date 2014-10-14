@@ -17,7 +17,7 @@ class TinCanManagerTest extends \PHPUnit_Framework_TestCase {
     
     $this->dirPath = '/tmp/' . uniqid();
     
-    $this->manager = new TinCanManager(new LRS('example.com', 'user', 'password'));
+    $this->manager = new TinCanManager(new LRS('lrs.example.com', 'user', 'password'));
   }
 
   /**
@@ -44,7 +44,7 @@ class TinCanManagerTest extends \PHPUnit_Framework_TestCase {
    */
   public function testBuildLaunchQueryString() {
     $params = array(
-      'endpoint' => 'example.com',
+      'endpoint' => 'lrs.example.com',
       'auth' => 'auth',
       'actor' => array(
         'name' => 'fname lname',
@@ -52,7 +52,7 @@ class TinCanManagerTest extends \PHPUnit_Framework_TestCase {
       )
     );
     $queryString = $this->manager->buildLaunchQueryString($params);
-    $this->assertEquals($queryString, 'endpoint=example.com&auth=auth&actor[name]=fname%20lname&actor[mbox]=no-reply%40example.com');
+    $this->assertEquals($queryString, 'endpoint=lrs.example.com&auth=auth&actor[name]=fname%20lname&actor[mbox]=no-reply%40example.com');
   }
   
   /**
@@ -62,7 +62,7 @@ class TinCanManagerTest extends \PHPUnit_Framework_TestCase {
     $package = $this->manager->createPackageDirectory($this->archiveFile, $this->dirPath);
     $agent = new Agent(array('name' => 'fname lname', 'mbox' => 'mailto:no-reply@example.com'));
     $url = $this->manager->buildLaunchUrl('example.com/private/path' , $package, $agent);
-    $this->assertEquals($url, 'example.com/private/path/index.html?endpoint=example.com&auth=Basic%20dXNlcjpwYXNzd29yZA%3D%3D&actor[name]=fname%20lname&actor[mbox]=mailto%3Ano-reply%40example.com&activity_id=http%3A//tincanapi.com/GolfExample_TCAPI');
+    $this->assertEquals($url, 'example.com/private/path/index.html?endpoint=lrs.example.com&auth=Basic%20dXNlcjpwYXNzd29yZA%3D%3D&actor[name]=fname%20lname&actor[mbox]=mailto%3Ano-reply%40example.com&activity_id=http%3A//tincanapi.com/GolfExample_TCAPI');
   }
   
 }
