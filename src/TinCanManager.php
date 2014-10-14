@@ -56,7 +56,7 @@ class TinCanManager implements TinCanManagerInterface {
    * @param string $schemaFile path to tincan.xml
    * @return TinCanPackage
    */
-  function loadTinCanPackage($schemaFile) {
+  private function loadTinCanPackage($schemaFile) {
     return new TinCanPackage($schemaFile);
   }
 
@@ -81,7 +81,7 @@ class TinCanManager implements TinCanManagerInterface {
    * @param type $parent
    * @return type
    */
-  protected function buildLaunchQueryString(array $query, $parent = '') {
+  public function buildLaunchQueryString(array $query, $parent = '') {
     $params = array();
 
     foreach ($query as $key => $value) {
