@@ -18,9 +18,10 @@ class TinCanPackage implements TinCanPackageInterface {
    */
   public function parseManifest($schemaFile) {
     $content = simplexml_load_file($schemaFile);
-    // Let json parse xml to array()
-    $content = json_encode($content);
-    return json_decode($content, TRUE);
+    // SimpleXMLElement to JSON string
+    $json = json_encode($content);
+    
+    return json_decode($json, TRUE);
   }
   
   /**
@@ -44,6 +45,10 @@ class TinCanPackage implements TinCanPackageInterface {
     $this->manifest = $manifest;
   }
   
+  /**
+   * 
+   * @return string path to tincan.xml
+   */
   public function getSchemaFile() {
     return $this->schemaFile;
   }
