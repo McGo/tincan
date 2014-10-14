@@ -17,9 +17,7 @@ class TinCanManagerTest extends \PHPUnit_Framework_TestCase {
     
     $this->dirPath = '/tmp/' . uniqid();
     
-    $this->lrs = new LRS('example.com', 'user', 'password');
-    
-    $this->manager = new TinCanManager($this->lrs);
+    $this->manager = new TinCanManager(new LRS('example.com', 'user', 'password'));
   }
 
   /**
@@ -28,6 +26,8 @@ class TinCanManagerTest extends \PHPUnit_Framework_TestCase {
   public function testCreatePackageDirectory() {
     $package = $this->manager->createPackageDirectory($this->archiveFile, $this->dirPath);
     $this->assertTrue($package instanceof TinCanPackage);
+    $this->assertEquals($package->getSchemaFile(), $this->dirPath . '/tincan.xml');
+    $this->assertEquals(count($package->getActivities()), 1);
   }
   
   /**
@@ -35,26 +35,37 @@ class TinCanManagerTest extends \PHPUnit_Framework_TestCase {
    */
   public function testValidateTinCanSchema() {
     $package = $this->manager->createPackageDirectory($this->archiveFile, $this->dirPath);
-    $result = $this->manager->validateTinCanSchema($package->getSchemaFile());
-    $this->assertTrue($result);
-  }
-  
-  /**
-   * @covers TinCanManager::buildLaunchUrl
-   */
-  public function testBuildLaunchUrl() {
-    $package = $this->manager->createPackageDirectory($this->archiveFile, $this->dirPath);
-    $agent = new Agent(array('name' => 'duynguyen', 'mbox' => 'mailto:duy.nguyen@gmail.com'));
-    $result = $this->manager->buildLaunchUrl('abc.com' , $package, $agent);
-    $this->assertTrue(is_string($result));
+    $this->assertTrue($this->manager->validateTinCanSchema($package->getSchemaFile()));
+    $this->assertFalse($this->manager->validateTinCanSchema('nowhere'));
   }
   
   /**
    * @covers TinCanManager::buildLaunchQueryString
    */
   public function testBuildLaunchQueryString() {
-    
+    $params = array(
+      'endpoint' => 'example.com',
+      'auth' => 'auth',
+      'actor' => array(
+        'name' => 'fname lname',
+        'mbox' => 'no-reply@example.com'
+      )
+    );
+    $queryString = $this->manager->buildLaunchQueryString($params);
+    $this->assertEquals($queryString, 'endpoint=example.com&auth=auth&actor[name]=fname%20lname&actor[mbox]=no-reply%40example.com');
   }
+  
+  /**
+   * @covers TinCanManager::buildLaunchUrl
+   */
+  public function testBuildLaunchUrl() {
+//    $package = $this->manager->createPackageDirectory($this->archiveFile, $this->dirPath);
+//    $agent = new Agent(array('name' => 'fname lname', 'mbox' => 'mailto:no-reply@example.com'));
+//    $url = $this->manager->buildLaunchUrl('example.com' , $package, $agent);
+//    $this->assertEquals($url, 'aaa');
+  }
+  
+
   
   
 }

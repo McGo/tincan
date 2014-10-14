@@ -56,7 +56,7 @@ class TinCanManager implements TinCanManagerInterface {
    * @param string $schemaFile path to tincan.xml
    * @return TinCanPackage
    */
-  private function loadTinCanPackage($schemaFile) {
+  public function loadTinCanPackage($schemaFile) {
     return new TinCanPackage($schemaFile);
   }
 
