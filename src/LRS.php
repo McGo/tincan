@@ -2,13 +2,8 @@
 
 namespace GO1\Aduro\TinCan;
 
-//use GO1\Aduro\TinCan\LRSInterface;
-use TinCan\RemoteLRS;
-
-/**
- * @todo remove extending of RemoteLRS
- */
 class LRS implements LRSInterface {
+  
   protected $username;
   protected $password;
   protected $endpoint;

@@ -3,7 +3,7 @@
 namespace GO1\Aduro\TinCan;
 
 use GuzzleHttp\ClientInterface;
-use TinCan\Statement;
+use GuzzleHttp\Message\RequestInterface;
 
 class LRSRepositoryBase implements LRSRepositoryInterface {
 
@@ -26,8 +26,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
       'verb' => $verb,
       'activity' => $object,
     );
-    $response = $this->doGetStatements('statements', $params);
-    $statements = $this->parse($response);
+    $statements = $this->sendRequest('statements', $params);
     return !empty($statements) ? reset($statements) : FALSE;
   }
 
@@ -35,8 +34,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    * @{inheritdoc}
    */
   public function getStatementById($statementID) {
-    $response = $this->doGetStatements('statements', array('statementId' => $statementID));
-    $statements = $this->parse($response);
+    $statements = $this->sendRequest('statements', array('statementId' => $statementID));
     return !empty($statements) ? reset($statements) : FALSE;
   }
 
@@ -44,58 +42,91 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    * @{inheritdoc}
    */
   public function getStatementsHasActor($actor, $conditions = array()) {
-    $response = $this->doGetStatements('statements', array('agent' => $actor));
-    return $this->parse($response);
+    return $this->sendRequest('statements', array('agent' => $actor));
   }
 
   /**
    * @{inheritdoc}
    */
   public function getStatementsHasObject($object, $conditions = array()) {
-    $response = $this->doGetStatements('statements', array('activity' => $object));
-    return $this->parse($response);
+    return $this->sendRequest('statements', array('activity' => $object));
   }
 
   /**
    * @{inheritdoc}
    */
   public function getStatementsHasVerb($verbID, $conditions = array()) {
-    $response = $this->doGetStatements('statements', array('verb' => $verbID));
-    return $this->parse($response);
+    return $this->sendRequest('statements', array('verb' => $verbID));
   }
 
-  private function doGetStatements($url, array $parameters = array()) {
-    try {
-      // Build request
-      $request = $this->httpClient->createRequest('GET', $url, [
-        'headers' => [
+  /**
+   * 
+   * @param string $url
+   * @return RequestInterface
+   */
+  protected function makeRequest($url) {
+    return $this->httpClient->createRequest('GET', $url, array(
+        'headers' => array(
           'X-Experience-API-Version' => $this->lrs->getVersion(),
           'Content-Type' => 'application/json',
-        ],
-        'auth' => [
+        ),
+        'auth' => array(
           $this->lrs->getUsername(),
           $this->lrs->getPassword(),
-        ]
-      ]);
-      
-      // Buidl parameters
-      $query = $request->getQuery();
-      foreach ($parameters as $name => $value) {
-        $query->set($name, $value);
-      }
-      
-      // Send request
-      $reponse = $this->httpClient->send($request);
-      if ($reponse->getStatusCode() == '200') {
-        $content = $reponse->getBody()->getContents();
-        return $content;
-      }
-    }
-    catch (Exception $ex) {
-      throw new Exception($ex->getMessage());
+        )
+    ));
+  }
+  
+  /**
+   * 
+   * @param RequestInterface $request
+   * @param array $params
+   */
+  protected function setRequestParams(RequestInterface $request, $params = array()) {
+    $query = $request->getQuery();
+    foreach ($params as $name => $value) {
+      $query->set($name, $value);
     }
   }
   
+  /**
+   * 
+   * @param RequestInterface $request
+   * @return string
+   */
+  protected function getRequestContent(RequestInterface $request) {
+    $reponse = $this->httpClient->send($request);
+    if ($reponse->getStatusCode() == '200') {
+      $json = $reponse->getBody()->getContents();
+      return $json;
+    }
+    return '[]';
+  }
+  
+  /**
+   * 
+   * @param string $url
+   * @param array $params
+   * @return array
+   */
+  protected function sendRequest($url, array $params = array()) {
+    // Build request
+    $request = $this->makeRequest($url);
+
+    // Set parameters
+    $this->setRequestParams($request, $params);
+
+    // Execute request
+    $json = $this->getRequestContent($request);
+    
+    return $this->parse($json);
+  }
+  
+  /**
+   * 
+   * @param string $json
+   * @return array
+   */
   public function parse($json) {
     return $this->parser->parse($json);
   }
