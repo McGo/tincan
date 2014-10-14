@@ -6,6 +6,9 @@ use GO1\Aduro\TinCan\LRSRepositoryBase;
 use GO1\Aduro\TinCan\LRS;
 use GuzzleHttp\Client;
 use TinCan\Agent;
+use TinCan\RemoteLRS;
+use TinCan\Activity;
+use GO1\Aduro\TinCan\StatementParserBase;
 
 define('COMMON_EMAIL',       'tincanphp@tincanapi.com');
 define('COMMON_GROUP_EMAIL', 'tincanphp+group@tincanapi.com');
@@ -26,10 +29,10 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
   protected $client;
 
   protected function setUp() {
-    $this->remoteLRS = new \TinCan\RemoteLRS(self::$endpoint, self::$version, self::$username, self::$password);
+    $this->remoteLRS = new RemoteLRS(self::$endpoint, self::$version, self::$username, self::$password);
     $this->lrs = new LRS(self::$endpoint, self::$username, self::$password);
     $this->client = new Client(['base_url' => $this->lrs->getEndpoint()]);
-    $this->parse = new \GO1\Aduro\TinCan\StatementParserBase();
+    $this->parse = new StatementParserBase();
     $this->lrsRepo = new LRSRepositoryBase($this->client, $this->lrs, $this->parse);
   }
   
@@ -38,7 +41,7 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
       [
         'actor' => ['mbox' => $mbox],
         'verb' => ['id' => $verb, 'display' => ['US' => 'US']],
-        'object' => new \TinCan\Activity(['id' => $object])
+        'object' => new Activity(['id' => $object])
       ]
     );
     return $saveResponse->success ? $saveResponse : FALSE;
