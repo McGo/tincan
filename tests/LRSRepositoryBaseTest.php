@@ -1,13 +1,13 @@
 <?php
 
-namespace GO1\Aduro\TinCan\Test;
+namespace GO1\LMS\TinCan\Test;
 
-use GO1\Aduro\TinCan\LRSRepositoryBase;
-use GO1\Aduro\TinCan\LRS;
+use GO1\LMS\TinCan\LRSRepositoryBase;
+use GO1\LMS\TinCan\LRS;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Message\Request;
 use GuzzleHttp\Stream\Stream;
-use GO1\Aduro\TinCan\StatementParserBase;
+use GO1\LMS\TinCan\StatementParserBase;
 
 class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
 

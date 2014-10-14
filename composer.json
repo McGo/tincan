@@ -1,9 +1,9 @@
 {
-  "name":"go1/aduro/tincan",
+  "name":"go1/lms/tincan",
   "license": "proprietary",
   "autoload": {
     "psr-4": {
-      "GO1\\Aduro\\TinCan\\": "src"
+      "GO1\\LMS\\TinCan\\": "src"
     }
   },
   "require": {

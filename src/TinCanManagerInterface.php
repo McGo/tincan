@@ -1,6 +1,6 @@
 <?php
 
-namespace GO1\Aduro\TinCan;
+namespace GO1\LMS\TinCan;
 use TinCan\Agent;
 
 interface TinCanManagerInterface {
@@ -27,7 +27,7 @@ interface TinCanManagerInterface {
 
   /**
    * @baseUrl: the url of directory contain tincan package 
-   * @package: GO1\Aduro\TinCan\TinCanPackageInterface
+   * @package: GO1\LMS\TinCan\TinCanPackageInterface
    * @agent: TinCan\Agent
    */
   function buildLaunchUrl($basePath, TinCanPackageInterface $package, Agent $agent);

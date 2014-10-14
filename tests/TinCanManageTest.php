@@ -1,9 +1,9 @@
 <?php
 
-namespace GO1\Aduro\TinCan\Test;
-use GO1\Aduro\TinCan\TinCanPackage;
-use GO1\Aduro\TinCan\TinCanManager;
-use GO1\Aduro\TinCan\LRS;
+namespace GO1\LMS\TinCan\Test;
+use GO1\LMS\TinCan\TinCanPackage;
+use GO1\LMS\TinCan\TinCanManager;
+use GO1\LMS\TinCan\LRS;
 use TinCan\Agent;
 
 class TinCanManagerTest extends \PHPUnit_Framework_TestCase {

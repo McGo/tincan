@@ -1,6 +1,6 @@
 <?php
 
-namespace GO1\Aduro\TinCan;
+namespace GO1\LMS\TinCan;
 
 interface StatementParserInterface {
   

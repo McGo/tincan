@@ -1,6 +1,6 @@
 <?php
 
-use GO1\Aduro\TinCan\StatementParserBase;
+use GO1\LMS\TinCan\StatementParserBase;
 
 class StatementParserBaseTest extends \PHPUnit_Framework_TestCase {
   
@@ -14,7 +14,7 @@ class StatementParserBaseTest extends \PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @covers GO1\Aduro\TinCan\StatementParserBase::parse
+   * @covers GO1\LMS\TinCan\StatementParserBase::parse
    */
   public function testParse() {
     $array = $this->parser->parse($this->json);
