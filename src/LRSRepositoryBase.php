@@ -112,7 +112,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    * @param array $params
    * @return array
    */
-  protected function sendRequest($url, array $params = array()) {
+  public function sendRequest($url, array $params = array()) {
     // Build request
     $request = $this->makeRequest($url);
 
