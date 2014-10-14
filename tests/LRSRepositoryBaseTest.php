@@ -6,6 +6,9 @@ use GO1\Aduro\TinCan\LRSRepositoryBase;
 use GO1\Aduro\TinCan\LRS;
 use GuzzleHttp\Client;
 use TinCan\Agent;
+use TinCan\RemoteLRS;
+use TinCan\Activity;
+use GO1\Aduro\TinCan\StatementParserBase;
 
 define('COMMON_EMAIL',       'tincanphp@tincanapi.com');
 define('COMMON_GROUP_EMAIL', 'tincanphp+group@tincanapi.com');
@@ -26,10 +29,10 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
   protected $client;
 
   protected function setUp() {
-    $this->remoteLRS = new \TinCan\RemoteLRS(self::$endpoint, self::$version, self::$username, self::$password);
+    $this->remoteLRS = new RemoteLRS(self::$endpoint, self::$version, self::$username, self::$password);
     $this->lrs = new LRS(self::$endpoint, self::$username, self::$password);
     $this->client = new Client(['base_url' => $this->lrs->getEndpoint()]);
-    $this->parse = new \GO1\Aduro\TinCan\StatementParserBase();
+    $this->parse = new StatementParserBase();
     $this->lrsRepo = new LRSRepositoryBase($this->client, $this->lrs, $this->parse);
   }
   
@@ -38,7 +41,7 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
       [
         'actor' => ['mbox' => $mbox],
         'verb' => ['id' => $verb, 'display' => ['US' => 'US']],
-        'object' => new \TinCan\Activity(['id' => $object])
+        'object' => new Activity(['id' => $object])
       ]
     );
     return $saveResponse->success ? $saveResponse : FALSE;
@@ -78,6 +81,7 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
     $statements = $this->lrsRepo->getStatementsHasActor(json_encode($params));
     $this->assertEquals(3, count($statements));
     foreach ($statements as $statement) {
+      $this->assertEquals('mailto:' . $mbox, $statement->getActor()->getMbox());
       $this->assertInstanceOf('TinCan\Statement', $statement);
     }
   }
@@ -92,6 +96,7 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
     $statements = $this->lrsRepo->getStatementsHasVerb($verbId);
     $this->assertEquals(4, count($statements));
     foreach ($statements as $statement) {
+      $this->assertEquals($verbId, $statement->getVerb()->getId());
       $this->assertInstanceOf('TinCan\Statement', $statement);
     }
   }
@@ -104,6 +109,7 @@ class LRSRepositoryBaseTest extends \PHPUnit_Framework_TestCase {
     $statements = $this->lrsRepo->getStatementsHasObject($object);
     $this->assertEquals(2, count($statements));
     foreach ($statements as $statement) {
+      $this->assertEquals($object, $statement->getObject()->getId());
       $this->assertInstanceOf('TinCan\Statement', $statement);
     }
   }

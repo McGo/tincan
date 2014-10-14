@@ -1,4 +1,5 @@
-[
+{ "statements":
+  [
   {
     "actor": {
       "name": "Sally Glider",
@@ -60,3 +61,4 @@
     }
   }
 ]
+}
