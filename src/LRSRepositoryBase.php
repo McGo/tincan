@@ -42,21 +42,24 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    * @{inheritdoc}
    */
   public function getStatementsHasActor($actor, $conditions = array()) {
-    return $this->sendRequest('statements', array('agent' => $actor));
+    $params = array_merge(array('agent' => $actor), $conditions);
+    return $this->sendRequest('statements', $params);
   }
 
   /**
    * @{inheritdoc}
    */
   public function getStatementsHasObject($object, $conditions = array()) {
-    return $this->sendRequest('statements', array('activity' => $object));
+    $params = array_merge(array('activity' => $object), $conditions);
+    return $this->sendRequest('statements', $params);
   }
 
   /**
    * @{inheritdoc}
    */
   public function getStatementsHasVerb($verbID, $conditions = array()) {
-    return $this->sendRequest('statements', array('verb' => $verbID));
+    $params = array_merge(array('verb' => $verbID), $conditions);
+    return $this->sendRequest('statements', $params);
   }
 
   /**
@@ -94,7 +97,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    * @param RequestInterface $request
    * @return string
    */
-  protected function getRequestContent(RequestInterface $request) {
+  protected function executeRequest(RequestInterface $request) {
     $reponse = $this->httpClient->send($request);
     if ($reponse->getStatusCode() == '200') {
       $json = $reponse->getBody()->getContents();
@@ -117,7 +120,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
     $this->setRequestParams($request, $params);
 
     // Execute request
-    $json = $this->getRequestContent($request);
+    $json = $this->executeRequest($request);
     
     return $this->parse($json);
   }
