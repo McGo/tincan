@@ -59,13 +59,10 @@ class TinCanManagerTest extends \PHPUnit_Framework_TestCase {
    * @covers TinCanManager::buildLaunchUrl
    */
   public function testBuildLaunchUrl() {
-//    $package = $this->manager->createPackageDirectory($this->archiveFile, $this->dirPath);
-//    $agent = new Agent(array('name' => 'fname lname', 'mbox' => 'mailto:no-reply@example.com'));
-//    $url = $this->manager->buildLaunchUrl('example.com' , $package, $agent);
-//    $this->assertEquals($url, 'aaa');
+    $package = $this->manager->createPackageDirectory($this->archiveFile, $this->dirPath);
+    $agent = new Agent(array('name' => 'fname lname', 'mbox' => 'mailto:no-reply@example.com'));
+    $url = $this->manager->buildLaunchUrl('example.com/private/path' , $package, $agent);
+    $this->assertEquals($url, 'example.com/private/path/index.html?endpoint=example.com&auth=Basic%20dXNlcjpwYXNzd29yZA%3D%3D&actor[name]=fname%20lname&actor[mbox]=mailto%3Ano-reply%40example.com&activity_id=http%3A//tincanapi.com/GolfExample_TCAPI');
   }
-  
-
-  
   
 }
