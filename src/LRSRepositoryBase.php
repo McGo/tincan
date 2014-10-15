@@ -4,6 +4,7 @@ namespace GO1\LMS\TinCan;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Exception\RequestException;
 
 class LRSRepositoryBase implements LRSRepositoryInterface {
 
@@ -132,6 +133,29 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
    */
   public function parse($json) {
     return $this->parser->parse($json);
+  }
+  
+  /**
+   * Verify the connection to LRS
+   * @return type
+   */
+  public function verifyConnection() {
+    // Build request
+    $request = $this->makeRequest('statements');
+    $params  = array('limit' => 1);
+    
+    // Set parameters
+    $this->setRequestParams($request, $params);
+    
+    try {
+      $reponse = $this->httpClient->send($request);
+    } catch (RequestException $ex) {
+      return array(
+        'error' => TRUE,
+        'message' => $ex->getMessage()
+      );
+    }
+    return $reponse->getStatusCode() == '200';
   }
 
 }
