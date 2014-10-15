@@ -27,6 +27,26 @@ class TinCanManager implements TinCanManagerInterface {
     }
     return NULL;
   }
+  
+  public function getActorEncode(Agent $agent) {
+    $agentAccount = $agent->getAccount();
+    if (is_null($agentAccount)) {
+      return json_encode(array(
+        "name" => $agent->getName(),
+        "mbox" => $agent->getMbox(),
+      ));
+    }
+    // If existing AgentAcount
+    $account = new \stdClass();
+    $account->accountServiceHomePage = $agent->getAccount()->getHomePage();
+    $account->accountName = $agent->getAccount()->getName();
+    $actor = new \stdClass();
+    $actor->name = [$agent->getName()];
+    $actor->account = [$account];
+    $actor->objectType = $agent->getObjectType();
+    
+    return json_encode($actor);
+  }
 
   /**
    * Get url to launch package from agent
@@ -34,18 +54,31 @@ class TinCanManager implements TinCanManagerInterface {
    * @return string
    */
   public function buildLaunchUrl($basePath, TinCanPackageInterface $package, Agent $agent) {
-    foreach ($package->getActivities() as $activity) {
-      // Looking for main activity of package.
-      if (isset($activity['launch'])) {
+    // Get activities from package.
+    $activities = $package->getActivities();
+    
+    // The activities has only activity
+    if(isset($activities['activity']['@attributes'])) {
+      if (isset($activities['activity']['launch'])) {
         $params['endpoint'] = $this->lrs->getEndpoint();
         $params['auth'] = $this->lrs->getAuth();
-        $params['actor'] = array(
-          "name" => $agent->getName(),
-          "mbox" => $agent->getMbox(),
-        );
-        $params['activity_id'] = $activity['@attributes']['id'];
+        $params['actor'] = $this->getActorEncode($agent);
+        $params['activity_id'] = $activities['activity']['@attributes']['id'];
         $query_string = $this->buildLaunchQueryString($params);
-        return $basePath . '/' . $activity['launch'] . '?' . $query_string;
+        return $basePath . '/' . $activities['activity']['launch'] . '?' . $query_string;
+      }
+    }
+    else { // The activities has more activity
+      foreach ($activities['activity'] as $activity) {
+        // Looking for main activity of package.
+        if (isset($activity['launch'])) {
+          $params['endpoint'] = $this->lrs->getEndpoint();
+          $params['auth'] = $this->lrs->getAuth();
+          $params['actor'] = $this->getActorEncode($agent);
+          $params['activity_id'] = $activity['@attributes']['id'];
+          $query_string = $this->buildLaunchQueryString($params);
+          return $basePath . '/' . $activity['launch'] . '?' . $query_string;
+        }
       }
     }
     return '';
@@ -81,7 +114,7 @@ class TinCanManager implements TinCanManagerInterface {
    * @param type $parent
    * @return type
    */
-  public function buildLaunchQueryString(array $query, $parent = '') {
+  protected function buildLaunchQueryString(array $query, $parent = '') {
     $params = array();
 
     foreach ($query as $key => $value) {
