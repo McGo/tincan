@@ -34,7 +34,7 @@ class TinCanPackage implements TinCanPackageInterface {
   /**
    * Get the actity has properties launch
    */
-  public function getCourse() {
+  public function getLaunchActivity() {
     // Get activities
     $activities = $this->getActivities();
     
