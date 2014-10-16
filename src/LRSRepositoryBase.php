@@ -21,6 +21,13 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
   /**
    * @{inheritdoc}
    */
+  public function getStatements() {
+    return $this->sendRequest('statements');
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
   public function getStatement($actor, $verb, $object) {
     $params = array(
       'agent' => $actor,

@@ -5,6 +5,11 @@ namespace GO1\LMS\TinCan;
 interface LRSRepositoryInterface {
   
   /**
+   * Get all statements.
+   */
+  function getStatements();
+  
+  /**
    * 
    * @param string $statementID uuid
    * @return string json format
