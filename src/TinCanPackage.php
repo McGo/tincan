@@ -30,6 +30,30 @@ class TinCanPackage implements TinCanPackageInterface {
   public function getActivities() {
     return isset($this->manifest['activities']) ? $this->manifest['activities'] : array();
   }
+  
+  /**
+   * Get the actity has properties launch
+   */
+  public function getLaunchActivity() {
+    // Get activities
+    $activities = $this->getActivities();
+    
+    // The activities has only activity
+    if(isset($activities['activity']['@attributes'])) {
+      if (isset($activities['activity']['launch'])) {
+        return $activities['activity']['@attributes']['id'];
+      }
+    }
+    else { // The activities has more activity
+      foreach ($activities['activity'] as $activity) {
+        // Looking for main activity of package.
+        if (isset($activity['launch'])) {
+          return $activity['@attributes']['id'];
+        }
+      }
+    }
+    return FALSE;
+  }
 
   /**
    * @{inheritdoc}
