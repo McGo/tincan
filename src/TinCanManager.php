@@ -53,9 +53,12 @@ class TinCanManager implements TinCanManagerInterface {
    * @param Agent $agent
    * @return string
    */
-  public function buildLaunchUrl($basePath, TinCanPackageInterface $package, Agent $agent) {
+  public function buildLaunchUrl($basePath, TinCanPackageInterface $package, Agent $agent, $registration = NULL) {
     // Get activities from package.
     $activities = $package->getActivities();
+    if (!is_null($registration)) {
+      $params['registration'] = $registration;
+    }
     
     // The activities has only activity
     if(isset($activities['activity']['@attributes'])) {
