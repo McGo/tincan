@@ -150,10 +150,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
     try {
       $reponse = $this->httpClient->send($request);
     } catch (RequestException $ex) {
-      return array(
-        'error' => TRUE,
-        'message' => $ex->getMessage()
-      );
+      return FALSE;
     }
     return $reponse->getStatusCode() == '200';
   }
