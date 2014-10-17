@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * 
+ * @author khoa <khoa@go1.com.au>
+ */
+
 namespace GO1\LMS\TinCan\Object\Activity;
 
 class Activity implements ObjectInterface {
@@ -16,11 +21,11 @@ class Activity implements ObjectInterface {
    * @param string $id IRI unique identifier
    * @param ActivityDefinition $definition optional
    */
-  public function __construct($id, ActivityDefinition $definition = null) {
+  public function __construct($id, ActivityDefinition $definition = NULL) {
     $this->setId($id);
     
     if (!is_null($definition)) {
-      $this->definition = $definition;
+      $this->setDefinition($definition);
     }
   }
   
@@ -32,5 +37,16 @@ class Activity implements ObjectInterface {
     $this->id = $id;
     $this->addArray(array('id' => $id));
   }
+  
+  /**
+   * 
+   */
+  public function setDefinition($definition) {
+    //@todo validation
+    $this->definition = $definition;
+    $this->addArray(array('definition' => $this->makeDefinitionArray($definition)));
+  }
+  
+  
   
 }

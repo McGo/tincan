@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * 
+ * @author khoa <khoa@go1.com.au>
+ */
+
 namespace GO1\LMS\TinCan\Object;
 
 class AnonymousGroup extends GroupBase {
@@ -8,7 +13,7 @@ class AnonymousGroup extends GroupBase {
    * @param array $members required
    * @param string $name optional
    */
-  public function __construct($members, $name = null) {
+  public function __construct($members, $name = NULL) {
     
     $this->setObjectType(self::OBJECT_TYPE);
     

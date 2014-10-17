@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * 
+ * @author khoa <khoa@go1.com.au>
+ */
+
 namespace GO1\LMS\TinCan\Object\Group;
 
 use GO1\LMS\TinCan\Object\InverseIdentity\InverseIdentity;
@@ -21,7 +26,7 @@ class IdentifiedGroup extends GroupBase {
    * @param string $name optional
    * @param array $members optional
    */
-  public function __construct(InverseIdentity $id, $name = null, $members = null) {
+  public function __construct(InverseIdentity $id, $name = NULL, $members = NULL) {
     
     $this->setObjectType(self::OBJECT_TYPE);
     
