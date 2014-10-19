@@ -40,15 +40,17 @@ class InteractionActivity {
    */
   protected $correctResponsePatterns;
   
-  protected $choices;
+  /**
+   *
+   * @var string choices|scale|source|target|steps 
+   */
+  protected $componentList;
   
-  protected $scale;
-  
-  protected $source;
-  
-  protected $target;
- 
-  protected $steps;
+  /**
+   *
+   * @var array
+   */
+  protected $components;
   
   /**
    * 
@@ -72,7 +74,15 @@ class InteractionActivity {
         $this->validateComponents($components)) {
       $this->setInteractionType($interactionType);
       // choices|scale|source|target|step
-      $this->$componentList = $components;
+      $this->componentList = $componentList;
+      $this->components = $components;
+      
+      $componentsArray = array();
+      foreach ($components as $component) {
+        $componentsArray[] = $component->toArray();
+      }
+      
+      $this->addArray(array($componentList => $componentsArray));
     }
   }
   
