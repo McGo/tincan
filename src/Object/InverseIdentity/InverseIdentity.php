@@ -14,47 +14,82 @@ class InverseIdentity {
   
   /**
    *
-   * @var string mailto IRI mailto:example@example.com 
+   * @var array
+   * @see https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#details-3
+   *      mbox: string mailto IRI mailto:example@example.com 
+   *      mbox_sha1sum: string SHA1 hash of mailto IRI f427d80dc332a166bf5f160ec15f009ce7e68c4c
+   *      openid: string uri http://example.openid.example.com/
+   *      account: array includes homePage and name
    */
-  protected $mbox;
+  private $types = array(
+    'mbox',
+    'mbox_sha1sum',
+    'openid',
+    'account'
+  );
   
   /**
    *
-   * @var string SHA1 hash of mailto IRI f427d80dc332a166bf5f160ec15f009ce7e68c4c
+   * @var string mbox|mbox_sha1sum|openid|account 
    */
-  protected $mbox_sha1sum;
+  protected $type;
   
   /**
    *
-   * @var string uri http://example.openid.example.com/
+   * @var mixed 
    */
-  protected $openid;
+  protected $value;
   
   /**
-   *
-   * @var array includes homePage and name 
+   * 
+   * @param string $type
+   * @param mixed $value
    */
-  protected $account;
-  
-  /**
-   * @var string 
-   */
-  private $property;
-  
-  
-  function __construct($property, $value) {
-    if (!property_exists($this, $property)) {
-      throw new Exception($property . ' is not defined.');
+  public function __construct($type, $value) {
+    if ($this->validateType($type) &&
+        $this->validateValue($type, $value)) {
+      $this->type = $type;
+      $this->value = $value;
     }
-    // @todo validation
-    $this->$property = $value;
-    $this->property = $property;
+  }
+  
+  /**
+   * 
+   * @param string $type
+   * @throws Exception
+   */
+  protected function validateType($type) {
+    if (!in_array($type, $this->types)) {
+      throw new Exception($type . ' is not supported.');
+    }
+    return TRUE;
+  }
+  
+  /**
+   * 
+   * @param string $type
+   * @param mixed $value
+   * @return boolean
+   * @throws Exception
+   */
+  protected function validateValue($type, $value) {
+    if ($type == 'account') {
+      if (!is_array($value)) {
+        throw new Exception($type . ' must be an array.');
+      }
+    } 
+    else {
+      if (is_array($value)) {
+        throw new Exception($type . ' must be a string.');
+      }
+    }
+    return TRUE;
   }
   
   /**
    * 
    */
   function toArray() {
-    return array($this->property => $this->{$this->property});
+    return array($this->type => $this->value);
   }
 }

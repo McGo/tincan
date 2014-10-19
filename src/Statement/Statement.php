@@ -110,4 +110,17 @@ class Statement {
     $this->object = $object;
     $this->addArray(array('object' => $object->toArray()));
   }
+  
+  /**
+   * 
+   * @param string $id UUID
+   */
+  public function setId($id) {
+    $this->id = $id;
+    $this->addArray(array('id' => $id));
+  }
+  
+  /**
+   * 
+   */
 }
