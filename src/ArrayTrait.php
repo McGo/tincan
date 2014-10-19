@@ -1,11 +1,12 @@
 <?php
 
-namespace GO1\LMS\TinCan;
-
 /**
  *
  * @author khoa <khoa@go1.com.au>
  */
+
+namespace GO1\LMS\TinCan;
+
 trait ArrayTrait {
   
   protected $arrayStructure = array();
