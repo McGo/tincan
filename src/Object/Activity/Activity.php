@@ -12,8 +12,16 @@ class Activity implements ObjectInterface {
   
   const OBJECT_TYPE = 'Activity';
   
+  /**
+   *
+   * @var string IRI identifier
+   */
   protected $id;
 
+  /**
+   *
+   * @var ActivityDefinition 
+   */
   protected $definition;
   
   /**

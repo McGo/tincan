@@ -5,11 +5,12 @@
  * @author khoa <khoa@go1.com.au>
  */
 
-namespace GO1\LMS\TinCan\Object\Group;
+namespace GO1\LMS\TinCan\Object\Actor;
 
-use GO1\LMS\TinCan\Object\ObjectInterface;
+use GO1\LMS\TinCan\ArrayTrait;
 
-class GroupBase implements ObjectInterface {
+abstract class GroupBase implements ActorInterface {
+  use ArrayTrait;
   
   const OBJECT_TYPE = 'Group';
 

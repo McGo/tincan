@@ -10,7 +10,6 @@ namespace GO1\LMS\TinCan\Object\InverseIdentity;
 use GO1\LMS\TinCan\Object\ObjectTrait;
 
 trait InverseIdentityObjectTrait {
-  
   use ObjectTrait;
   
   protected $id;

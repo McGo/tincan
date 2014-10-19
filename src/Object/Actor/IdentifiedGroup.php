@@ -5,25 +5,28 @@
  * @author khoa <khoa@go1.com.au>
  */
 
-namespace GO1\LMS\TinCan\Object;
+namespace GO1\LMS\TinCan\Object\Actor;
 
 use GO1\LMS\TinCan\Object\InverseIdentity\InverseIdentity;
 use GO1\LMS\TinCan\Object\InverseIdentity\InverseIdentityObjectTrait;
 
-class Agent implements ObjectInterface {
+class IdentifiedGroup extends GroupBase {
   use InverseIdentityObjectTrait;
   
-  const OBJECT_TYPE = 'Agent';
-  
-  //Agent full name
   protected $name;
+  
+  /**
+   * Singular as declared in Tin Can API
+   */
+  protected $member;
   
   /**
    * 
    * @param InverseFunctionalIdentifier $id required
    * @param string $name optional
+   * @param array $members optional
    */
-  public function __construct(InverseIdentity $id, $name = NULL) {
+  public function __construct(InverseIdentity $id, $name = NULL, $members = NULL) {
     
     $this->setObjectType(self::OBJECT_TYPE);
     
@@ -32,15 +35,11 @@ class Agent implements ObjectInterface {
     if (!is_null($name)) {
       $this->setName($name);
     }
-  }
-
-  /**
-   * 
-   * @param string $name
-   */
-  public function setName($name) {
-    $this->name = $name;
-    $this->addArray(array('name' => $name));
+    
+    if (!is_null($members)) {
+      $this->setMember($members);
+    }
+    
   }
 
 }

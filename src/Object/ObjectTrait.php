@@ -7,11 +7,12 @@
 
 namespace GO1\LMS\TinCan\Object;
 
+use GO1\LMS\TinCan\ArrayTrait;
+
 trait ObjectTrait {
+  use ArrayTrait;
   
   protected $objectType;
-  
-  protected $arrayStructure = array();
   
   /**
    * @return string 
@@ -29,19 +30,4 @@ trait ObjectTrait {
     $this->addArray('objectType', $objectType);
   }
   
-  /**
-   * @todo change to getArrayStructure
-   * @return array
-   */
-  protected function toArray() {
-    return $this->arrayStructure;
-  }
-  
-  /**
-   * 
-   * @param type $values
-   */
-  public function addArray($values) {
-    $this->arrayStructure += $values;
-  }
 }

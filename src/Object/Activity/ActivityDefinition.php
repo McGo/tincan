@@ -28,15 +28,15 @@ class ActivityDefinition {
   
   /**
    * 
-   * @param type $name
+   * @param LanguageMap $name
    */
   public function setName(LanguageMap $name) {
     $this->name = $name;
-    $this->addArray(array('name' => $name));
+    $this->addArray(array('name' => $name->toArray()));
   }
   
   /**
-   * @param string $description
+   * @param LanguageMap $description
    */
   public function setDescription(LanguageMap $description) {
     $this->description = $description;
