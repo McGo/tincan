@@ -9,6 +9,7 @@ namespace GO1\LMS\TinCan\Statement;
 
 use GO1\LMS\TinCan\Object\ObjectInterface;
 use GO1\LMS\TinCan\Object\Actor\ActorInterface;
+use GO1\LMS\TinCan\Object\Result\Result;
 use GO1\LMS\TinCan\Object\Verb;
 use GO1\LMS\TinCan\ArrayTrait;
 
@@ -123,5 +124,39 @@ class Statement {
   
   /**
    * 
+   * @param Result $result
    */
+  public function setResult(Result $result) {
+    $this->result = $result;
+    $this->addArray(array('result' => $result->toArray()));
+  }
+  
+  /**
+   * 
+   * @param Context $context
+   */
+  public function setContext($context) {
+    $this->context = $context;
+    $this->addArray(array('context' => $context->toArray()));
+  }
+  
+  public function setTimestamp() {
+    
+  }
+  
+  public function setStored() {
+    
+  }
+  
+  public function setAuthority() {
+    
+  }
+  
+  public function setVersion() {
+    
+  }
+  
+  public function setAttachments() {
+    
+  }
 }
