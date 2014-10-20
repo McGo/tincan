@@ -17,6 +17,7 @@ class SubStatement implements ObjectInterface {
   protected $statement;
   
   public function __construct(Statement $statement) {
+    $this->setObjectType(self::OBJECT_TYPE);
     $this->setStatement($statement);
   }
   

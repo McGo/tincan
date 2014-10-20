@@ -5,9 +5,13 @@
  * @author khoa <khoa@go1.com.au>
  */
 
-namespace GO1\LMS\TinCan\Object;
+namespace GO1\LMS\TinCan;
 
+use GO1\LMS\TinCan\Statement;
 use GO1\LMS\TinCan\Object\InverseIdentity\InverseIdentity;
+use GO1\LMS\TinCan\Object\Activity;
+use GO1\LMS\TinCan\Object\StatementRef;
+use GO1\LMS\TinCan\Object\SubStatement;
 use GO1\LMS\TinCan\Object\Actor\Agent;
 use GO1\LMS\TinCan\Object\Actor\GroupBase;
 use GO1\LMS\TinCan\Object\Actor\AnonymousGroup;
@@ -15,7 +19,7 @@ use GO1\LMS\TinCan\Object\Actor\IdentifiedGroup;
 use GO1\LMS\TinCan\Object\Verb;
 use GO1\LMS\TinCan\Misc\LanguageMap;
 
-class ObjectFactory implements ObjectFactoryInterface {
+class TinCanFactory implements TinCanFactoryInterface {
 
   /**
    * @{inheritdoc}
@@ -48,12 +52,29 @@ class ObjectFactory implements ObjectFactoryInterface {
     return new Verb($id);
   }
   
-  
   /**
    * @{inheritdoc}
    */
-  public function createObject($type = 'Activity', $id = NULL) {
+  public function createObject($type = 'Activity', $id = NULL, $name = NULL,
+      $members = NULL, Statement $statement = NULL) {
     
+    if ($type == Activity::OBJECT_TYPE && !is_null($id)) {
+      return new Activity($id);
+    }
+    
+    if ($type == Agent::OBJECT_TYPE || $type == GroupBase::OBJECT_TYPE) {
+      return $this->createActor($type, $id, $name, $members);
+    }
+    
+    if ($type == StatementRef::OBJECT_TYPE && !is_null($id)) {
+      return new StatementRef($id);
+    }
+    
+    if ($type == SubStatement::OBJECT_TYPE && !is_null($statement)) {
+      return new SubStatement($statement);
+    }
+    
+    return NULL;
   }
   
   /**
@@ -63,4 +84,12 @@ class ObjectFactory implements ObjectFactoryInterface {
     // @todo check for non scalar values
     return new LanguageMap($values);
   }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function createStatement(ActorInterface $actor, Verb $verb, ObjectInterface $object) {
+    return new Statement($actor, $verb, $object);
+  }
+  
 }

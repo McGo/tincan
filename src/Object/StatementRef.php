@@ -12,6 +12,12 @@ class StatementRef implements ObjectInterface {
   
   const OBJECT_TYPE = 'StatementRef';
   
+  /**
+   *
+   * @var string statement UUID 
+   */
+  protected $id;
+  
   public function __construct($id) { 
     $this->setObjectType(self::OBJECT_TYPE); 
     $this->setId($id);

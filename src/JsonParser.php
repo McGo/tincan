@@ -8,21 +8,21 @@
 namespace GO1\LMS\TinCan;
 
 use GO1\LMS\TinCan\TinCanAPI;
-use GO1\LMS\TinCan\Object\ObjectFactoryInterface;
+use GO1\LMS\TinCan\TinCanFactoryInterface;
 
 class JsonParser implements JsonParserInterface {
 
   /**
    *
-   * @var ObjectFactoryInterface 
+   * @var TinCanFactoryInterface 
    */
   protected $factory;
 
   /**
    * 
-   * @param ObjectFactoryInterface $factory
+   * @param TinCanFactoryInterface $factory
    */
-  public function __construct(ObjectFactoryInterface $factory) {
+  public function __construct(TinCanFactoryInterface $factory) {
     $this->factory = $factory;
   }
 
@@ -41,15 +41,28 @@ class JsonParser implements JsonParserInterface {
     if (isset($jsonObject->statements)) {
       $statements = array();
       foreach ($jsonObject->statements as $statementJsonObject) {
-        $actor = $this->parseActor($statementJsonObject->actor);
-        $verb = $this->parseVerb($statementJsonObject->verb);
-        $object = $this->parseObject($statementJsonObject->object);
+        $statements[] = $this->parseStatement($statementJsonObject);
       }
       return $statements;
     }
     return NULL;
   }
 
+  /**
+   * @{inheritdoc}
+   */
+  public function parseStatement($statementJsonObject) {
+    $actor = $this->parseActor($statementJsonObject->actor);
+    $verb = $this->parseVerb($statementJsonObject->verb);
+    $object = $this->parseObject($statementJsonObject->object);
+    
+    $statement = $this->factory->createStatement($actor, $verb, $object);
+    
+    //futher processing
+    
+    return $statement;
+  }
+  
   /**
    * @{inheritdoc}
    */
@@ -105,7 +118,18 @@ class JsonParser implements JsonParserInterface {
    * @{inheritdoc}
    */
   public function parseObject($jsonObject) {
+    $type = $jsonObject->objectType;
     
+    // try parsing inverse identity
+    $id = isset($jsonObject->id) ? $jsonObject->id : $this->parseInverseIdentity($jsonObject);
+    
+    $name = isset($jsonObject->name) ? $jsonObject->name : NULL;
+    
+    $members = $this->parseMembers($jsonObject);
+    
+    $statement = $this->parseStatement($jsonObject);
+    
+    $this->factory->createObject($type, $id, $name, $members, $statement);
   }
   
   /**
