@@ -7,21 +7,12 @@
 
 namespace GO1\LMS\TinCan\Object\Context;
 
+use GO1\LMS\TinCan\TinCanAPI;
 use GO1\LMS\TinCan\ArrayTrait;
 use GO1\LMS\TinCan\Object\Activity;
 
 class ContextActivity {
   use ArrayTrait;
-  /**
-   *
-   * @var array 'parent', 'grouping', 'category' and 'other' are supported keys
-   */
-  private $keys = array(
-    'parent',
-    'grouping',
-    'category',
-    'other'
-  );
   
   /**
    *
@@ -53,7 +44,7 @@ class ContextActivity {
    * @throws Exception
    */
   protected function validateKey($key) {
-    if (in_array($key, $this->keys)) {
+    if (in_array($key, TinCanAPI::$contextActivityKeys)) {
       throw new Exception($key . ' is not supported.');
     }
   }

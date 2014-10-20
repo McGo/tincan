@@ -7,6 +7,8 @@
 
 namespace GO1\LMS\TinCan\Object\InverseIdentity;
 
+use GO1\LMS\TinCan\TinCanAPI;
+
 /**
  * @see https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#inversefunctional
  */
@@ -21,12 +23,7 @@ class InverseIdentity {
    *      openid: string uri http://example.openid.example.com/
    *      account: array includes homePage and name
    */
-  private $types = array(
-    'mbox',
-    'mbox_sha1sum',
-    'openid',
-    'account'
-  );
+
   
   /**
    *
@@ -59,7 +56,7 @@ class InverseIdentity {
    * @throws Exception
    */
   protected function validateType($type) {
-    if (!in_array($type, $this->types)) {
+    if (!in_array($type, TinCanAPI::$inverseIdentityTypes)) {
       throw new Exception($type . ' is not supported.');
     }
     return TRUE;

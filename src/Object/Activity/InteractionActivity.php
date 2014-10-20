@@ -8,6 +8,7 @@
 namespace GO1\LMS\TinCan\Object\Activity;
 
 use GO1\LMS\TinCan\ArrayTrait;
+use GO1\LMS\TinCan\TinCanAPI;
 
 class InteractionActivity {
   use ArrayTrait;
@@ -57,7 +58,7 @@ class InteractionActivity {
    * @param string $interactionType
    */
   public function setInteractionType($interactionType) {
-    if (array_key_exists($interactionType, $this->map)) {
+    if (in_array($interactionType, TinCanAPI::$interactionTypes)) {
       $this->interactionType = $interactionType;
       $this->addArray(array('interactionType' => $interactionType));
     }
@@ -91,8 +92,8 @@ class InteractionActivity {
    */
   protected function validateSupportedMap($interactionType, $componentList) {
     // Exclude true-false, fill-in, long-fill-in, numeric, other
-    if (array_key_exists($interactionType, $this->map)
-        && in_array($componentList, $this->map[$interactionType])) {
+    if (in_array($interactionType, TinCanAPI::$interactionTypes)
+        && in_array($componentList, TinCanAPI::$interactionComponentMap[$interactionType])) {
       return TRUE;
     }
     return FALSE;
