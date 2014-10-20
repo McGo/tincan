@@ -11,6 +11,7 @@ use GO1\LMS\TinCan\Object\ObjectInterface;
 use GO1\LMS\TinCan\Object\Actor\ActorInterface;
 use GO1\LMS\TinCan\Object\Result\Result;
 use GO1\LMS\TinCan\Object\Verb;
+use GO1\LMS\TinCan\Object\Attachment;
 use GO1\LMS\TinCan\ArrayTrait;
 
 class Statement {
@@ -177,7 +178,33 @@ class Statement {
     $this->addArray(array('version' => $version));
   }
   
-  public function setAttachments() {
-    
+  /**
+   * @param array $attachments
+   */
+  public function setAttachments($attachments) {
+    if ($this->validateAttachments($attachments)) {
+      $this->attachments = $attachments;
+      
+      $attachmentsArray = array();
+      foreach ($attachments as $attachment) {
+        $attachmentsArray[] = $attachment->toArray();
+      }
+      
+      $this->addArray(array('attachments' => $attachmentsArray));
+    }
+  }
+  
+  /**
+   * 
+   * @param array $attachments
+   * @return boolean
+   */
+  protected function validateAttachments($attachments) {
+    foreach ($attachments as $attachment) {
+      if (!$attachment instanceof Attachment) {
+        return FALSE;
+      }
+    }
+    return TRUE;
   }
 }
