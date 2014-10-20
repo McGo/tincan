@@ -81,5 +81,16 @@ class TinCanAPI {
     'numeric' => array(), 
     'other' => array()
   );
+  
+  /**
+   *
+   * @see https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#requirements-8
+   */
+  static $subStatementExcludeProperties = array(
+    'id', 
+    'stored', 
+    'version', 
+    'authority'
+  );
 }
 

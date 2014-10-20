@@ -42,6 +42,8 @@ class JsonParser implements JsonParserInterface {
       $statements = array();
       foreach ($jsonObject->statements as $statementJsonObject) {
         $actor = $this->parseActor($statementJsonObject->actor);
+        $verb = $this->parseVerb($statementJsonObject->verb);
+        $object = $this->parseObject($statementJsonObject->object);
       }
       return $statements;
     }
@@ -96,4 +98,10 @@ class JsonParser implements JsonParserInterface {
      return NULL;
   }
   
+  /**
+   * @{inheritdoc}
+   */
+  public function parseObject($jsonObject) {
+    
+  }
 }

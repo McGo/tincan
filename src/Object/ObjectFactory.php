@@ -47,4 +47,11 @@ class ObjectFactory implements ObjectFactoryInterface {
     return new Verb($id);
   }
   
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function createObject($type = 'Activity', $id = NULL) {
+    
+  }
 }

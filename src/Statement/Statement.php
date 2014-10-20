@@ -10,6 +10,7 @@ namespace GO1\LMS\TinCan\Statement;
 use GO1\LMS\TinCan\Object\ObjectInterface;
 use GO1\LMS\TinCan\Object\Actor\ActorInterface;
 use GO1\LMS\TinCan\Object\Verb;
+use GO1\LMS\TinCan\ArrayTrait;
 
 class Statement {
   use ArrayTrait;

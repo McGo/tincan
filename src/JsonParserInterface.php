@@ -42,4 +42,11 @@ interface JsonParserInterface {
    * @return Verb|NULL
    */
   function parseVerb($jsonObject);
+  
+   /**
+   * 
+   * @param stdClass $jsonObject
+   * @return ObjectInterface|NULL
+   */
+  function parseObject($jsonObject);
 }

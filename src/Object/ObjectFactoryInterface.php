@@ -35,4 +35,12 @@ interface ObjectFactoryInterface {
    * @return Verb
    */
   function createVerb(InverseIdentity $id);
+  
+  /**
+   * Create object in a statement
+   * Activity|Agent|GroupBase|SubStatement|StatementRef
+   * @param string $type default value is 'Activity' if not set
+   * @return ObjectInterface
+   */
+  function createObject($type = 'Activity', $id = NULL);
 }
