@@ -12,6 +12,7 @@ use GO1\LMS\TinCan\Object\Actor\Agent;
 use GO1\LMS\TinCan\Object\Actor\GroupBase;
 use GO1\LMS\TinCan\Object\Actor\AnonymousGroup;
 use GO1\LMS\TinCan\Object\Actor\IdentifiedGroup;
+use GO1\LMS\TinCan\Object\Verb;
 
 class ObjectFactory implements ObjectFactoryInterface {
 
@@ -39,5 +40,11 @@ class ObjectFactory implements ObjectFactoryInterface {
     }
   }
 
+  /**
+   * @{inheritdoc}
+   */
+  public function createVerb(InverseIdentity $id ) {
+    return new Verb($id);
+  }
   
 }

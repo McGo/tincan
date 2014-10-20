@@ -52,11 +52,11 @@ class JsonParser implements JsonParserInterface {
    * @{inheritdoc}
    */
   public function parseActor($actorJsonObject) {
-    $identity = $this->parseInverseIdentity($actorJsonObject);
+    $id = $this->parseInverseIdentity($actorJsonObject);
 
     $members = $this->parseMembers($actorJsonObject);
 
-    return $this->factory->createActor($actorJsonObject->objectType, $identity, $actorJsonObject->name, $members);
+    return $this->factory->createActor($actorJsonObject->objectType, $id, $actorJsonObject->name, $members);
   }
 
   /**
@@ -85,4 +85,15 @@ class JsonParser implements JsonParserInterface {
     return NULL;
   }
 
+  /**
+   * @{inheritdoc}
+   */
+  public function parseVerb($jsonObject) {
+     $id = $this->parseInverseIdentity($jsonObject);
+     if (!is_null($id)) {
+       return $this->factory->createVerb($id);
+     }
+     return NULL;
+  }
+  
 }

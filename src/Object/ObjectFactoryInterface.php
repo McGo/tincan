@@ -29,4 +29,10 @@ interface ObjectFactoryInterface {
    */
   function createActor($type, InverseIdentity $id = NULL, $name = NULL, $members = NULL);
   
+  /**
+   * 
+   * @param InverseIdentity $id
+   * @return Verb
+   */
+  function createVerb(InverseIdentity $id);
 }
