@@ -113,4 +113,23 @@ class Attachment {
     $this->sha2 = $sha2;
     $this->addArray(array('sha2' => $sha2));
   }
+  
+  /**
+   * 
+   * @param LanguageMap $description
+   */
+  public function setDescription(LanguageMap $description) {
+    $this->description = $description;
+    $this->addArray(array('description' => $description->toArray()));
+  }
+  
+  /**
+   * 
+   * @param string $fileUrl
+   */
+  public function setFileUrl($fileUrl) {
+    $this->fileUrl = $fileUrl;
+    $this->addArray(array('fileUrl' => $fileUrl));
+  }
+  
 }

@@ -18,6 +18,12 @@ use GO1\LMS\TinCan\Object\Actor\AnonymousGroup;
 use GO1\LMS\TinCan\Object\Actor\IdentifiedGroup;
 use GO1\LMS\TinCan\Object\Verb;
 use GO1\LMS\TinCan\Misc\LanguageMap;
+use GO1\LMS\TinCan\Object\Result\Result;
+use GO1\LMS\TinCan\Object\Result\Score;
+use GO1\LMS\TinCan\Object\Context\Context;
+use GO1\LMS\TinCan\Object\Context\ContextActivity;
+use GO1\LMS\TinCan\Misc\Extension;
+use GO1\LMS\TinCan\Object\Attachment;
 
 class TinCanFactory implements TinCanFactoryInterface {
 
@@ -92,4 +98,45 @@ class TinCanFactory implements TinCanFactoryInterface {
     return new Statement($actor, $verb, $object);
   }
   
+  /**
+   * @{inheritdoc}
+   */
+  public function createResult() {
+    return new Result;
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function createScore() {
+    return new Score;
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function createContext() {
+    return new Context;
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function createContextActivity($key, $value) {
+    return new ContextActivity($key, $value);
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function createExtension($key, $value) {
+    return new Extension($key, $value);
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function createAttachment($usageType, $display, $contentType, $length, $sha2) {
+    return new Attachment($usageType, $display, $contentType, $length, $sha2);
+  }
 }
