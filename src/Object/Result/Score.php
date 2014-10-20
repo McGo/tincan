@@ -10,6 +10,7 @@ namespace GO1\LMS\TinCan\Object\Result;
 use GO1\LMS\TinCan\Object\ObjectInterface;
 
 class Score implements ObjectInterface {
+  use ArrayTrait;
   
   protected $scaled;
   
@@ -19,4 +20,68 @@ class Score implements ObjectInterface {
   
   protected $max;
   
+  /**
+   * 
+   * @param decimal $scaled
+   */
+  public function setScaled($scaled) {
+    if ($this->validateScaled($scaled)) {
+      $this->scaled = $scaled;
+      $this->addArray(array('scaled' => $scaled));
+    }
+  }
+  
+  /**
+   * 
+   * @param float $scaled
+   * @return boolean
+   * @throws Exception
+   */
+  protected function validateScaled($scaled) {
+    if ($scaled < -1 && $scaled > 1) {
+      throw new Exception('scaled property is out of range.');
+    }
+    return TRUE;
+  }
+  
+  /**
+   * 
+   * @param float $raw
+   */
+  protected function setRaw($raw) {
+    if (isset($this->max) && $raw > $this->max) {
+      throw new Exception('raw property can\'t be greater than max.');
+    }
+    
+    if (isset($this->min) && $raw < $this->min) {
+      throw new Exception('raw property can\'t be less than min.');
+    }
+    
+    $this->raw = $raw;
+    $this->addArray(array('raw' => $raw));
+  }
+  
+  /**
+   * 
+   * @param float $min
+   */
+  protected function setMin($min) {
+    if (isset($this->max) && $min > $this->max) {
+      throw new Exception('min property can\'t be greater than max.');
+    }
+    $this->min = $min;
+    $this->addArray(array('min' => $min));
+  }
+  
+  /**
+   * 
+   * @param float $max
+   */
+  protected function setMax($max) {
+     if (isset($this->min) && $max < $this->min) {
+      throw new Exception('max property can\'t be less than max.');
+    }
+    $this->max = $max;
+    $this->addArray(array('max' => $max));
+  }
 }
