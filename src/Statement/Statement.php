@@ -63,7 +63,7 @@ class Statement {
   
   /**
    *
-   * @var ObjectInterface
+   * @var ActorInterface
    */
   protected $authority;
   
@@ -140,20 +140,41 @@ class Statement {
     $this->addArray(array('context' => $context->toArray()));
   }
   
-  public function setTimestamp() {
-    
+  /**
+   * 
+   * @param string $timestamp
+   * @see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations
+   */
+  public function setTimestamp($timestamp) {
+    $this->timestamp = new \DateTime($timestamp);
+    $this->addArray(array('timestamp' => $timestamp));
   }
   
-  public function setStored() {
-    
+  /**
+   * @param string $stored
+   * @see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations
+   */
+  public function setStored($stored) {
+    $this->stored = new \DateTime($stored);
+    $this->addArray(array('stored' => $stored));
   }
   
-  public function setAuthority() {
-    
+  /**
+   * 
+   * @param ActorInterface $authority
+   */
+  public function setAuthority(ActorInterface $authority) {
+    $this->authority = $authority;
+    $this->addArray(array('authority' => $authority->toArray()));
   }
   
-  public function setVersion() {
-    
+  /**
+   * 
+   * @param string $version
+   */
+  public function setVersion($version) {
+    $this->version = $version;
+    $this->addArray(array('version' => $version));
   }
   
   public function setAttachments() {
