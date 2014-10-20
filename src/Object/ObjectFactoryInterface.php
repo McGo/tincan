@@ -43,4 +43,10 @@ interface ObjectFactoryInterface {
    * @return ObjectInterface
    */
   function createObject($type = 'Activity', $id = NULL);
+  
+  /**
+   * 
+   * @param mixed $values
+   */
+  function createLanguageMap($values);
 }

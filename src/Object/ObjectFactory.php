@@ -13,6 +13,7 @@ use GO1\LMS\TinCan\Object\Actor\GroupBase;
 use GO1\LMS\TinCan\Object\Actor\AnonymousGroup;
 use GO1\LMS\TinCan\Object\Actor\IdentifiedGroup;
 use GO1\LMS\TinCan\Object\Verb;
+use GO1\LMS\TinCan\Misc\LanguageMap;
 
 class ObjectFactory implements ObjectFactoryInterface {
 
@@ -53,5 +54,13 @@ class ObjectFactory implements ObjectFactoryInterface {
    */
   public function createObject($type = 'Activity', $id = NULL) {
     
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function createLanguageMap($values) {
+    // @todo check for non scalar values
+    return new LanguageMap($values);
   }
 }

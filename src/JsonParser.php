@@ -93,7 +93,10 @@ class JsonParser implements JsonParserInterface {
   public function parseVerb($jsonObject) {
      $id = $this->parseInverseIdentity($jsonObject);
      if (!is_null($id)) {
-       return $this->factory->createVerb($id);
+       $verb = $this->factory->createVerb($id);
+       if (isset($jsonObject->display)) {
+         $verb->setDisplay($this->parseLanguageMap($jsonObject));
+       }
      }
      return NULL;
   }
@@ -103,5 +106,12 @@ class JsonParser implements JsonParserInterface {
    */
   public function parseObject($jsonObject) {
     
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function parseLanguageMap($jsonObject) {
+    return $this->factory->createLanguageMap($jsonObject);
   }
 }

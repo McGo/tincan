@@ -9,8 +9,12 @@ namespace GO1\LMS\TinCan\Misc;
 
 class LanguageMap extends \ArrayObject {
   
-  function __construct($array) {
-    parent::__construct($array, self::ARRAY_AS_PROPS);
+  /**
+   * 
+   * @param mixed $values
+   */
+  function __construct($values) {
+    parent::__construct($values, self::STD_PROP_LIST);
   }
   
   function toArray() {

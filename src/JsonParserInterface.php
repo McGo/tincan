@@ -43,10 +43,17 @@ interface JsonParserInterface {
    */
   function parseVerb($jsonObject);
   
-   /**
+  /**
    * 
    * @param stdClass $jsonObject
    * @return ObjectInterface|NULL
    */
   function parseObject($jsonObject);
+  
+  /**
+   * 
+   * @param stdClass $jsonObject
+   * @return LanguageMap|NULL
+   */
+  function parseLanguageMap($jsonObject);
 }
