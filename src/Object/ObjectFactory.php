@@ -13,25 +13,17 @@ use GO1\LMS\TinCan\Object\Actor\GroupBase;
 use GO1\LMS\TinCan\Object\Actor\AnonymousGroup;
 use GO1\LMS\TinCan\Object\Actor\IdentifiedGroup;
 
-class ObjectFactory {
+class ObjectFactory implements ObjectFactoryInterface {
 
   /**
-   * 
-   * @param string $type
-   * @param mixed $value
-   * @return InverseIdentity
+   * @{inheritdoc}
    */
   public function createInverseIdentity($type, $value) {
     return new InverseIdentity($type, $value);
   }
 
   /**
-   * 
-   * @param string $type Agent|Group
-   * @param InverseIdentity $id
-   * @param string $name
-   * @param array $members
-   * @return Agent|IdentifiedGroup|AnonymousGroup
+   * @{inheritdoc}
    */
   public function createActor($type, InverseIdentity $id = NULL, $name = NULL, $members = NULL) {
     if ($type == GroupBase::OBJECT_TYPE) {
@@ -47,4 +39,5 @@ class ObjectFactory {
     }
   }
 
+  
 }
