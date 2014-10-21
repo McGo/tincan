@@ -181,12 +181,19 @@ class JsonParser implements JsonParserInterface {
       $statement = $this->parseStatement($jsonObject);
     }
 
-    return $this->factory->createObject($type, $id, $name, $members, $statement);
+    $object = $this->factory->createObject($type, $id, $name, $members, $statement);
+    
+    $this->parseIntoActivity($object, $jsonObject);
+    
+    // @todo Agent, Group, SubStatement, StatementRef
+    
+    return $object;
   }
 
-  protected function parseActivity($jsonObject) {
-    if ($jsonObject->definition) {
+  protected function parseIntoActivity($activity, $jsonObject) {
+    if (isset($jsonObject->definition)) {
       $definition = $this->parseActivityDefinition($jsonObject->definition);
+      $activity->setDefinition($definition);
     }
   }
   
@@ -205,9 +212,42 @@ class JsonParser implements JsonParserInterface {
       $definition->setMoreInfo($jsonObject->moreInfo);
     }
     
+    if (isset($jsonObject->interactionType)) {
+       $definition->setInteractionType($jsonObject->interactionType);
+    }
     
+    // @todo double check terminology of `component list`
+    foreach (TinCanAPI::$componentLists as $list) {
+      if (isset($jsonObject->$list)) {
+        $interactionsArray = array();
+        foreach ($jsonObject->$list as $interactionJsonObject) {
+          $interactionsArray[] = $this->parseInteractionComponent($interactionJsonObject);
+        }
+        $definition->setComponents($list, $interactionsArray, $definition->interactionType);
+      }
+    }
+    
+    if (isset($jsonObject->correctResponsePatterns)) {
+      $definition->setCorrectResponsePatterns((array) $jsonObject->correctResponsePatterns);
+    }
     
     return $definition;
+  }
+  
+  /**
+   * 
+   * @param stdClasd $jsonObject
+   * @return InteractionComponent
+   */
+  protected function parseInteractionComponent($jsonObject) {
+    if (isset($jsonObject->id)) {
+      $interaction = $this->factory->createInteractionComponent($jsonObject->id);
+      if (isset($jsonObject->description)) {
+        $interaction->setDescription($this->parseLanguageMap($jsonObject->description));
+      }
+      return $interaction;
+    }
+    return NULL;
   }
   
   /**

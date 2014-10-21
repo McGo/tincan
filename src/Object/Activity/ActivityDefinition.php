@@ -64,14 +64,6 @@ class ActivityDefinition {
 
   /**
    * 
-   * @param InteractionActivity $interactionProperties
-   */
-  public function setInteractionProperties(InteractionActivity $interactionProperties) {
-    $this->interactionProperties = $interactionProperties;
-  }
-
-  /**
-   * 
    * @param string $interactionType
    */
   public function setInteractionType($interactionType) {
