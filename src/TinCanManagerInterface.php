@@ -1,7 +1,6 @@
 <?php
 
 namespace GO1\LMS\TinCan;
-use TinCan\Agent;
 
 interface TinCanManagerInterface {
   
@@ -9,7 +8,7 @@ interface TinCanManagerInterface {
    * unzip package
    * @archiveFile path to tincan zip file
    * @dirPath path to extract zip file
-   * return TinCanPackage
+   * return Package
    */
   function createPackageDirectory($archiveFile, $dirPath);
 
@@ -21,15 +20,17 @@ interface TinCanManagerInterface {
 
   /**
    * @schemaFile: path to tincan.xml
-   * return TinCanPackage
+   * return Package
    */
-  function loadTinCanPackage($schemaFile);
+  function loadPackage($schemaFile);
 
   /**
-   * @baseUrl: the url of directory contain tincan package 
-   * @package: GO1\LMS\TinCan\TinCanPackageInterface
-   * @agent: TinCan\Agent
+   * 
+   * @param string $basePath
+   * @param \GO1\LMS\TinCan\Package\PackageInterface $package
+   * @param \GO1\LMS\TinCan\Object\Actor\ActorInterface
+   * @return string
    */
-  function buildLaunchUrl($basePath, TinCanPackageInterface $package, Agent $agent);
+  function buildLaunchUrl($basePath, PackageInterface $package, ActorInterface $agent);
   
 }

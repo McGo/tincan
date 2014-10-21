@@ -5,7 +5,7 @@
  * @author khoa <khoa@go1.com.au>
  */
 
-namespace GO1\LMS\TinCan;
+namespace GO1\LMS\TinCan\Parser;
 
 use GO1\LMS\TinCan\TinCanAPI;
 use GO1\LMS\TinCan\TinCanFactoryInterface;

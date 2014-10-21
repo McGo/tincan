@@ -1,8 +1,8 @@
 <?php
 
-namespace GO1\LMS\TinCan;
+namespace GO1\LMS\TinCan\Package;
 
-class TinCanPackage implements TinCanPackageInterface {
+class Package implements PackageInterface {
 
   protected $metadata;
   protected $schemaFile;

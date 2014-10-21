@@ -2,8 +2,8 @@
 
 namespace GO1\LMS\TinCan\Test;
 
-use GO1\LMS\TinCan\LRSRepositoryBase;
-use GO1\LMS\TinCan\LRS;
+use GO1\LMS\TinCan\LRS\LRSRepositoryBase;
+use GO1\LMS\TinCan\LRS\LRS;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Message\Request;
 use GuzzleHttp\Stream\Stream;

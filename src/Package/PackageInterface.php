@@ -1,8 +1,8 @@
 <?php
 
-namespace GO1\LMS\TinCan;
+namespace GO1\LMS\TinCan\Package;
 
-interface TinCanPackageInterface {
+interface PackageInterface {
 
   /**
    * @return array activities

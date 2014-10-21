@@ -1,6 +1,6 @@
 <?php
 
-use GO1\LMS\TinCan\JsonParser;
+use GO1\LMS\TinCan\Parser\JsonParser;
 use GO1\LMS\TinCan\TinCanFactory;
 
 class JsonParserTest extends \PHPUnit_Framework_TestCase {

@@ -1,6 +1,6 @@
 <?php
 
-namespace GO1\LMS\TinCan;
+namespace GO1\LMS\TinCan\LRS;
 
 class LRS implements LRSInterface {
   

@@ -8,17 +8,10 @@
 namespace GO1\LMS\TinCan;
 
 use GO1\LMS\TinCan\Statement\Statement;
-use GO1\LMS\TinCan\Object\Result\Result;
 use GO1\LMS\TinCan\Object\InverseIdentity\InverseIdentity;
 use GO1\LMS\TinCan\Object\Verb;
 use GO1\LMS\TinCan\Object\ObjectInterface;
 use GO1\LMS\TinCan\Object\Actor\ActorInterface;
-use GO1\LMS\TinCan\Misc\LanguageMap;
-use GO1\LMS\TinCan\Object\Result\Score;
-use GO1\LMS\TinCan\Object\Context\Context;
-use GO1\LMS\TinCan\Object\Context\ContextActivity;
-use GO1\LMS\TinCan\Misc\Extension;
-use GO1\LMS\TinCan\Object\Attachment;
 
 interface TinCanFactoryInterface {
 
@@ -72,22 +65,22 @@ interface TinCanFactoryInterface {
   /**
    * 
    * @param mixed $values
-   * @return LanguageMap
+   * @return \GO1\LMS\TinCan\Misc\LanguageMap
    */
   function createLanguageMap($values);
   
   /**
-   * @return Result
+   * @return \GO1\LMS\TinCan\Object\Result\Result;
    */
   function createResult();
   
   /**
-   * @return Score
+   * @return \GO1\LMS\TinCan\Object\Result\Score
    */
   function createScore();
   
   /**
-   * @return Context
+   * @return \GO1\LMS\TinCan\Object\Context\Context;
    */
   function createContext();
   
@@ -95,7 +88,7 @@ interface TinCanFactoryInterface {
    * 
    * @param string $key 
    * @param array $value
-   * @return ContextActivity
+   * @return \GO1\LMS\TinCan\Object\Context\ContextActivity
    */
   function createContextActivity($key, $value);
   
@@ -103,18 +96,18 @@ interface TinCanFactoryInterface {
    * 
    * @param string $key
    * @param mixed $value
-   * @return Extension
+   * @return \GO1\LMS\TinCan\Misc\Extension
    */
   function createExtension($key, $value);
   
   /**
    * 
    * @param string $usageType IRI
-   * @param LanguageMap $display
+   * @param \GO1\LMS\TinCan\Misc\LanguageMap $display
    * @param string $contentType
    * @param int $length
    * @param string $sha2 SHA-2 (SHA-256, SHA-384, SHA-512)
-   * @return Attachment
+   * @return \GO1\LMS\TinCan\Object\Attachment
    */
   function createAttachment($usageType, $display, $contentType, $length, $sha2);
 }

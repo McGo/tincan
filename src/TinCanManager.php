@@ -3,6 +3,8 @@
 namespace GO1\LMS\TinCan;
 
 use TinCan\Agent;
+use GO1\LMS\TinCan\LRS\LRSInterface;
+use GO1\LMS\TinCan\Package\Package;
 
 class TinCanManager implements TinCanManagerInterface {
 
@@ -14,7 +16,7 @@ class TinCanManager implements TinCanManagerInterface {
 
   /**
    * Extract tincan zip file to specify directory.
-   * @return TinCanPackage|NULL
+   * @return Package|NULL
    */
   public function createPackageDirectory($archiveFile, $dirPath) {
     $zip = new \ZipArchive;
@@ -23,7 +25,7 @@ class TinCanManager implements TinCanManagerInterface {
       $zip->close();
 
       $schemaFile = $dirPath . '/tincan.xml';
-      return $this->loadTinCanPackage($schemaFile);
+      return $this->loadPackage($schemaFile);
     }
     return NULL;
   }
@@ -53,7 +55,7 @@ class TinCanManager implements TinCanManagerInterface {
    * @param Agent $agent
    * @return string
    */
-  public function buildLaunchUrl($basePath, TinCanPackageInterface $package, Agent $agent, $registration = NULL) {
+  public function buildLaunchUrl($basePath, PackageInterface $package, Agent $agent, $registration = NULL) {
     // Get activities from package.
     $activities = $package->getActivities();
     if (!is_null($registration)) {
@@ -90,10 +92,10 @@ class TinCanManager implements TinCanManagerInterface {
   /**
    * 
    * @param string $schemaFile path to tincan.xml
-   * @return TinCanPackage
+   * @return Package
    */
-  public function loadTinCanPackage($schemaFile) {
-    return new TinCanPackage($schemaFile);
+  public function loadPackage($schemaFile) {
+    return new Package($schemaFile);
   }
 
   /**

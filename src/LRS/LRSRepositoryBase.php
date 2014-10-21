@@ -1,10 +1,11 @@
 <?php
 
-namespace GO1\LMS\TinCan;
+namespace GO1\LMS\TinCan\LRS;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Exception\RequestException;
+use GO1\LMS\TinCan\Parser\JsonParserInterface;
 
 class LRSRepositoryBase implements LRSRepositoryInterface {
 
@@ -12,7 +13,7 @@ class LRSRepositoryBase implements LRSRepositoryInterface {
   protected $lrs;
   protected $parser;
 
-  public function __construct(ClientInterface $httpClient, LRS $lrs, StatementParserInterface $parser) {
+  public function __construct(ClientInterface $httpClient, LRS $lrs, JsonParserInterface $parser) {
     $this->httpClient = $httpClient;
     $this->lrs = $lrs;
     $this->parser = $parser;
