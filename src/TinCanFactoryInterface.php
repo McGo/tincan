@@ -51,10 +51,10 @@ interface TinCanFactoryInterface {
   
   /**
    * 
-   * @param InverseIdentity $id
+   * @param string $id IRI
    * @return Verb
    */
-  function createVerb(InverseIdentity $id);
+  function createVerb($id);
   
   /**
    * Create object in a statement

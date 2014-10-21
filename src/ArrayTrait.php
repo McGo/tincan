@@ -26,4 +26,14 @@ trait ArrayTrait {
   public function addArray($values) {
     $this->arrayStructure += $values;
   }
+  
+  /**
+   * @todo move to proper place
+   * @param string $property
+   */
+  public function get($property) {
+    if (property_exists($this, $property)) {
+      return $this->$property;
+    }
+  }
 }

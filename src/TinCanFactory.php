@@ -56,7 +56,7 @@ class TinCanFactory implements TinCanFactoryInterface {
   /**
    * @{inheritdoc}
    */
-  public function createVerb(InverseIdentity $id ) {
+  public function createVerb($id ) {
     return new Verb($id);
   }
   

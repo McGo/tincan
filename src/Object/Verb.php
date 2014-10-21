@@ -49,4 +49,5 @@ class Verb implements ObjectInterface {
     // InverseIdentity is supposed to self declared its key
     $this->addArray(array('id' => $id));
   }
+
 }
