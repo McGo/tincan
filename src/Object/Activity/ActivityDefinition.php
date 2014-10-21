@@ -9,6 +9,7 @@ namespace GO1\LMS\TinCan\Object\Activity;
 
 use GO1\LMS\TinCan\Misc\LanguageMap;
 use GO1\LMS\TinCan\Object\ObjectTrait;
+use GO1\LMS\TinCan\TinCanAPI;
 
 class ActivityDefinition {
 

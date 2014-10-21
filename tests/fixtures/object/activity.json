@@ -1,0 +1,14 @@
+{
+    "id": "http://tincanapi.com/GolfExample_TCAPI/GolfAssessment/interactions.handicap_3",
+    "definition": {
+        "description": {
+            "en-US": "A 'scratch golfer' has a handicap of ___"
+        },
+        "type": "http://adlnet.gov/expapi/activities/cmi.interaction",
+        "interactionType": "numeric",
+        "correctResponsesPattern": [
+            "0"
+        ]
+    },
+    "objectType": "Activity"
+}

@@ -55,7 +55,7 @@ class Activity implements ObjectInterface {
   public function setDefinition($definition) {
     //@todo validation
     $this->definition = $definition;
-    $this->addArray(array('definition' => $this->makeDefinitionArray($definition)));
+    $this->addArray(array('definition' => $definition->toArray()));
   }
   
   

@@ -47,9 +47,22 @@ class JsonParserTest extends \PHPUnit_Framework_TestCase {
   public function testParseVerb() {
     $jsonObject = json_decode(file_get_contents(__DIR__ . '/fixtures/verb/verb.json'));
     $verb = $this->parser->parseVerb($jsonObject);
-    $this->assertInstanceOf('GO1\LMS\TinCan\Object\Verb', $verb);
     
+    $this->assertInstanceOf('GO1\LMS\TinCan\Object\Verb', $verb);   
     $this->assertInstanceOf('GO1\LMS\TinCan\Misc\LanguageMap', $verb->get('display'));
+  }
+  
+  /**
+   * @covers GO1\LMS\TinCan\JsonParser::parseObject
+   */
+  public function testParseObject() {
+    $jsonObject = json_decode(file_get_contents(__DIR__ . '/fixtures/object/activity.json'));
+    $activity = $this->parser->parseObject($jsonObject);
+
+    $this->assertInstanceOf('GO1\LMS\TinCan\Object\Activity\Activity', $activity);
+    $this->assertInstanceOf('GO1\LMS\TinCan\Object\Activity\ActivityDefinition', $activity->get('definition'));
+    
+    // @todo test object as Agent, Group, SubStament, StatementRef
   }
 
 }

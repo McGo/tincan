@@ -203,7 +203,7 @@ class JsonParser implements JsonParserInterface {
       $definition->setName($this->parseLanguageMap($jsonObject->name));
     }
     if (isset($jsonObject->description)) {
-      $definition->setDescription($this->parseLanguageMap($jsonObject->name));
+      $definition->setDescription($this->parseLanguageMap($jsonObject->description));
     }
     if (isset($jsonObject->type)) {
       $definition->setType($jsonObject->type);
