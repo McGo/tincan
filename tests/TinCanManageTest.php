@@ -48,11 +48,10 @@ class TinCanManagerTest extends \PHPUnit_Framework_TestCase {
     $id = new InverseIdentity('mbox', 'mailto:no-reply@example.com');
     $agent = new Agent($id);
     $agent->setName('fname lname');
-    $url = $this->manager->buildLaunchUrl('example.com/private/path' , $package, $agent);
-   
-  //  wrong expected 
-  //  $expected = 'example.com/private/path/index.html?endpoint=http://lrs.example.com/data/xAPI/&auth=Basic dXNlcjpwYXNzd29yZA==&actor={"mbox":["mailto:khoa@example.com"],"name":["khoa pham"]}';
-  //  $this->assertEquals($expected, $url);
+    $url = $this->manager->buildLaunchUrl('http://example.com/tincan-path' , $package, $agent);
+    $expected = 'http://example.com/tincan-path/index.html?endpoint=http://lrs.example.com/data/xAPI/&auth=Basic dXNlcjpwYXNzd29yZA==&actor={"mbox":["mailto:no-reply@example.com"],"name":["fname lname"]}&activity_id=http://tincanapi.com/GolfExample_TCAPI';
+    
+    $this->assertEquals($expected, urldecode($url));
   }
   
 }

@@ -38,17 +38,18 @@ class TinCanManager implements TinCanManagerInterface {
    */
   public function buildLaunchUrl($basePath, PackageInterface $package, ActorInterface $agent, $registration = NULL) {
     $queryString = array();
-    
+
+    // @todo need cleaner code for query string builder
+    $queryString['endpoint'] = $this->lrs->getEndpoint();
+    $queryString['auth'] = $this->lrs->getAuth();
+    // @todo figure out why launcher url need value as an array
+    $queryString['actor'] = json_encode($this->createActor($agent->toArray()));
+    $queryString['activity_id'] = $package->getLaunchActivityId();
     if (!is_null($registration)) {
       $queryString['registration'] = $registration;
     }
-    // @todo need cleaner code for query string builder
-    $queryString['activity_id'] = $package->getLaunchActivityId();
-    $queryString['endpoint'] = $this->lrs->getEndpoint();
-    $queryString['auth'] = $this->lrs->getAuth();
-    $queryString['actor'] = $agent->toArray();
-    
-    return $basePath . '/' . $package->getLaunchValue() . '?' . 
+
+    return $basePath . '/' . $package->getLaunchValue() . '?' .
         $this->buildLaunchQueryString($queryString);
   }
 
@@ -103,5 +104,15 @@ class TinCanManager implements TinCanManagerInterface {
 
     return implode('&', $params);
   }
-
+  
+  /**
+   * @todo remove this method
+   */
+  protected function createActor($values) {
+    $actor = array();
+    foreach ($values as $key => $value) {
+      $actor[$key] = array($value);
+    }
+    return $actor;
+  }
 }
