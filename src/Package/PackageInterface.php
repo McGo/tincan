@@ -10,8 +10,12 @@ interface PackageInterface {
   function getActivities();
   
   /**
-   * @return array
+   * @return string
    */
-  function getLaunchActivity();
+  function getLaunchActivityId();
   
+  /**
+   * @return string
+   */
+  function getLaunchValue();
 }

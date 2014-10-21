@@ -21,10 +21,24 @@ class Package implements PackageInterface {
   }
   
   /**
-   * Get the actity has properties launch
+   * Get the actity has child launch element
    */
   public function getLaunchActivity() {
     return reset($this->xmlDoc->xpath('(/x:tincan/x:activities/x:activity[x:launch])[1]')); 
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function getLaunchActivityId() {
+    return (string) $this->getLaunchActivity()['id'];
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function getLaunchValue() {
+    return (string) $this->getLaunchActivity()->launch;
   }
   
   /**

@@ -18,11 +18,18 @@ class PackageTest extends \PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @covers \GO1\LMS\TinCan\Package\Package::getLaunchActivity
+   * @covers \GO1\LMS\TinCan\Package\Package::getLaunchValue
    */
-  public function testGetLaunchActivity() {
-    $launch = $this->package->getLaunchActivity();
-    $this->assertEquals((string) $launch->launch, 'index.html');
+  public function testGetLaunchValue() {
+    $value = $this->package->getLaunchValue();
+    $this->assertEquals($value, 'index.html');
   }
   
+  /**
+   * @covers \GO1\LMS\TinCan\Package\Package::getLaunchActivityId
+   */
+  public function testGetLaunchActivityId() {
+    $id = $this->package->getLaunchActivityId();
+    $this->assertEquals($id, 'http://tincanapi.com/GolfExample_TCAPI');
+  }
 }

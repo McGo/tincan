@@ -36,18 +36,29 @@ class TinCanManager implements TinCanManagerInterface {
    * @return string
    */
   public function buildLaunchUrl($basePath, PackageInterface $package, Agent $agent, $registration = NULL) {
-    // Get activities from package.
-    $activities = $package->getActivities();
+    $queryString = array();
+    
     if (!is_null($registration)) {
-      $params['registration'] = $registration;
+      $queryString['registration'] = $registration;
     }
+    
+    // @todo need cleaner code for query string builder
+    
+    $queryString['activity_id'] = (string) $package->getLaunchActivity()['id'];
+    
+    $queryString['endpoint'] = $this->lrs->getEndpoint();
+    
+    $queryString['auth'] = $this->lrs->getAuth();
+    
+    $queryString['actor'] = $agent->toArray();
+    
     
     // The activities has only activity
 //    if(isset($activities['activity']['@attributes'])) {
 //      if (isset($activities['activity']['launch'])) {
 //        $params['endpoint'] = $this->lrs->getEndpoint();
-//        $params['auth'] = $this->lrs->getAuth();
-//        $params['actor'] = $this->getActorEncode($agent);
+//        $params['$queryString'] = $this->lrs->getAuth();
+//        
 //        $params['activity_id'] = $activities['activity']['@attributes']['id'];
 //        $query_string = $this->buildLaunchQueryString($params);
 //        return $basePath . '/' . $activities['activity']['launch'] . '?' . $query_string;
