@@ -10,18 +10,8 @@ namespace GO1\LMS\TinCan\Object\Actor;
 use GO1\LMS\TinCan\ArrayTrait;
 
 abstract class GroupBase implements ActorInterface {
-  use ArrayTrait;
   
   const OBJECT_TYPE = 'Group';
-
-  /**
-   * 
-   * @param string $name
-   */
-  public function setName($name) {
-    $this->name = $name;
-    $this->addArray(array('name' => $name));
-  }
   
   /**
    * 
@@ -30,7 +20,6 @@ abstract class GroupBase implements ActorInterface {
   public function setMember($members) {
     //@todo validate $members parameter
     $this->member = $members;
-    $this->addArray(array('member' => $this->makeMemberArray($members)));
   }
   
   /**

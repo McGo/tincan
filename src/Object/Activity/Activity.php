@@ -7,6 +7,9 @@
 
 namespace GO1\LMS\TinCan\Object\Activity;
 
+use GO1\LMS\TinCan\Object\ObjectTrait;
+use GO1\LMS\TinCan\Object\ObjectInterface;
+
 class Activity implements ObjectInterface {
   use ObjectTrait;
   

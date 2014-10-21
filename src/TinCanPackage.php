@@ -4,19 +4,19 @@ namespace GO1\LMS\TinCan;
 
 class TinCanPackage implements TinCanPackageInterface {
 
-  protected $manifest;
+  protected $metadata;
   protected $schemaFile;
 
   public function __construct($schemaFile) {
     $this->schemaFile = $schemaFile;
-    $this->setManifest($this->parseManifest($schemaFile));
+    $this->setMetadata($this->parseMetadata($schemaFile));
   }
 
   /**
    * Parse tincan.xml to array.
    * @return type
    */
-  public function parseManifest($schemaFile) {
+  public function parseMetadata($schemaFile) {
     $content = simplexml_load_file($schemaFile);
     // SimpleXMLElement to JSON string
     $json = json_encode($content);
@@ -28,7 +28,7 @@ class TinCanPackage implements TinCanPackageInterface {
    * @{inheritdoc}
    */
   public function getActivities() {
-    return isset($this->manifest['activities']) ? $this->manifest['activities'] : array();
+    return isset($this->metadata['activities']) ? $this->metadata['activities'] : array();
   }
   
   /**
@@ -58,15 +58,15 @@ class TinCanPackage implements TinCanPackageInterface {
   /**
    * @{inheritdoc}
    */
-  public function getManifest() {
-    return $this->manifest;
+  public function getMetadata() {
+    return $this->metadata;
   }
 
   /**
    * @{inheritdoc}
    */
-  public function setManifest($manifest = array()) {
-    $this->manifest = $manifest;
+  public function setMetadata($metadata = array()) {
+    $this->metadata = $metadata;
   }
   
   /**

@@ -14,7 +14,6 @@ use GO1\LMS\TinCan\Object\Verb;
 use GO1\LMS\TinCan\Object\ObjectInterface;
 use GO1\LMS\TinCan\Object\Actor\ActorInterface;
 use GO1\LMS\TinCan\Misc\LanguageMap;
-use GO1\LMS\TinCan\Object\Result\Result;
 use GO1\LMS\TinCan\Object\Result\Score;
 use GO1\LMS\TinCan\Object\Context\Context;
 use GO1\LMS\TinCan\Object\Context\ContextActivity;

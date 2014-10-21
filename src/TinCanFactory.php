@@ -7,15 +7,17 @@
 
 namespace GO1\LMS\TinCan;
 
-use GO1\LMS\TinCan\Statement;
+use GO1\LMS\TinCan\Statement\Statement;
 use GO1\LMS\TinCan\Object\InverseIdentity\InverseIdentity;
-use GO1\LMS\TinCan\Object\Activity;
+use GO1\LMS\TinCan\Object\Activity\Activity;
 use GO1\LMS\TinCan\Object\StatementRef;
 use GO1\LMS\TinCan\Object\SubStatement;
+use GO1\LMS\TinCan\Object\Actor\ActorInterface;
 use GO1\LMS\TinCan\Object\Actor\Agent;
 use GO1\LMS\TinCan\Object\Actor\GroupBase;
 use GO1\LMS\TinCan\Object\Actor\AnonymousGroup;
 use GO1\LMS\TinCan\Object\Actor\IdentifiedGroup;
+use GO1\LMS\TinCan\Object\ObjectInterface;
 use GO1\LMS\TinCan\Object\Verb;
 use GO1\LMS\TinCan\Misc\LanguageMap;
 use GO1\LMS\TinCan\Object\Result\Result;
@@ -46,7 +48,7 @@ class TinCanFactory implements TinCanFactoryInterface {
         return new IdentifiedGroup($id, $name, $members);
       }
     }
-    if ($type == Agent::OBJECT_TYPE && $id instanceof InverseIdentity) {
+    if ((is_null($type) || $type == Agent::OBJECT_TYPE) && $id instanceof InverseIdentity) {
       return new Agent($id, $name);
     }
   }

@@ -60,45 +60,47 @@ class JsonParser implements JsonParserInterface {
       $verb = $this->parseVerb($statementJsonObject->verb);
       $object = $this->parseObject($statementJsonObject->object);
 
-      $statement = $this->factory->createStatement($actor, $verb, $object);
+      if (!is_null($actor) && !is_null($verb) && !is_null($object)) {
+        $statement = $this->factory->createStatement($actor, $verb, $object);
 
-      if (isset($statementJsonObject->id)) {
-        $statement->setId($statementJsonObject->id);
-      }
+        if (isset($statementJsonObject->id)) {
+          $statement->setId($statementJsonObject->id);
+        }
 
-      if (isset($statementJsonObject->result)) {
-        $result = $this->parseResult($statementJsonObject->result);
-        $statement->setResult($result);
-      }
+        if (isset($statementJsonObject->result)) {
+          $result = $this->parseResult($statementJsonObject->result);
+          $statement->setResult($result);
+        }
 
-      if (isset($statementJsonObject->context)) {
-        $context = $this->parseContext($statementJsonObject->context);
-        $statement->setContext($context);
-      }
+        if (isset($statementJsonObject->context)) {
+          $context = $this->parseContext($statementJsonObject->context);
+          $statement->setContext($context);
+        }
 
-      if (isset($statementJsonObject->timestamp)) {
-        $statement->setTimestamp($statementJsonObject->timestamp);
-      }
+        if (isset($statementJsonObject->timestamp)) {
+          $statement->setTimestamp($statementJsonObject->timestamp);
+        }
 
-      if (isset($statementJsonObject->stored)) {
-        $statement->setTimestamp($statementJsonObject->stored);
-      }
+        if (isset($statementJsonObject->stored)) {
+          $statement->setTimestamp($statementJsonObject->stored);
+        }
 
-      if (isset($statementJsonObject->authority)) {
-        $authority = $this->parseActor($statementJsonObject->authority);
-        $statement->setAuthority($authority);
-      }
+        if (isset($statementJsonObject->authority)) {
+          $authority = $this->parseActor($statementJsonObject->authority);
+          $statement->setAuthority($authority);
+        }
 
-      if (isset($statementJsonObject->version)) {
-        $statement->setVersion($statementJsonObject->version);
-      }
+        if (isset($statementJsonObject->version)) {
+          $statement->setVersion($statementJsonObject->version);
+        }
 
-      if (isset($statementJsonObject->attachments)) {
-        $attachments = $this->parseAttachments($statementJsonObject->attachments);
-        $statement->setAttachments($attachments);
+        if (isset($statementJsonObject->attachments)) {
+          $attachments = $this->parseAttachments($statementJsonObject->attachments);
+          $statement->setAttachments($attachments);
+        }
+
+        return $statement;
       }
-      
-      return $statement;
     }
   }
 
@@ -106,13 +108,19 @@ class JsonParser implements JsonParserInterface {
    * @{inheritdoc}
    */
   public function parseActor($actorJsonObject) {
+    if (isset($actorJsonObject->account)) {
+      $actorJsonObject->account = (array) $actorJsonObject->account;
+    }
+
     $id = $this->parseInverseIdentity($actorJsonObject);
 
     $name = isset($actorJsonObject->name) ? $actorJsonObject->name : NULL;
-    
-    $members = isset($actorJsonObject->members) ? $this->parseMembers($actorJsonObject->members) : NULL;
 
-    return $this->factory->createActor($actorJsonObject->objectType, $id, $name, $members);
+    $members = isset($actorJsonObject->member) ? $this->parseMembers($actorJsonObject->member) : NULL;
+
+    $objectType = isset($actorJsonObject->objectType) ? $actorJsonObject->objectType : NULL;
+
+    return $this->factory->createActor($objectType, $id, $name, $members);
   }
 
   /**
@@ -157,7 +165,7 @@ class JsonParser implements JsonParserInterface {
    * @{inheritdoc}
    */
   public function parseObject($jsonObject) {
-    $type = $jsonObject->objectType;
+    $type = isset($jsonObject->objectType) ? $jsonObject->objectType : NULL;
 
     // try parsing inverse identity
     $id = isset($jsonObject->id) ? $jsonObject->id : $this->parseInverseIdentity($jsonObject);
@@ -166,7 +174,12 @@ class JsonParser implements JsonParserInterface {
 
     $members = isset($jsonObject->members) ? $this->parseMembers($jsonObject->members) : NULL;
 
-    $statement = $this->parseStatement($jsonObject);
+    $statement = NULL;
+    if (isset($jsonObject->objectType) &&
+        ($jsonObject->objectType == 'SubStatement' ||
+        $jsonObject->objectType == 'StatementRef')) {
+      $statement = $this->parseStatement($jsonObject);
+    }
 
     $this->factory->createObject($type, $id, $name, $members, $statement);
   }

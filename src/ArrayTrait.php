@@ -15,7 +15,7 @@ trait ArrayTrait {
    * @todo change to getArrayStructure
    * @return array
    */
-  protected function toArray() {
+  public function toArray() {
     return $this->arrayStructure;
   }
   

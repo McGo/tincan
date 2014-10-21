@@ -1,0 +1,14 @@
+{
+    "mbox": "mailto:info@tincanapi.com",
+    "name": "Info at TinCanAPI.com",
+    "objectType": "Group",
+    "member": [
+        {
+            "mbox_sha1sum": "48010dcee68e9f9f4af7ff57569550e8b506a88d"
+        },
+        {
+            "mbox_sha1sum": "ca3ffdb44c4727137e29ebf42ee80c2afdd8d328"
+        }
+    ]
+}
+

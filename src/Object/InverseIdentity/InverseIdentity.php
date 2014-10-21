@@ -57,7 +57,7 @@ class InverseIdentity {
    */
   protected function validateType($type) {
     if (!in_array($type, TinCanAPI::$inverseIdentityTypes)) {
-      throw new Exception($type . ' is not supported.');
+      throw new \Exception($type . ' is not supported.');
     }
     return TRUE;
   }
@@ -72,12 +72,12 @@ class InverseIdentity {
   protected function validateValue($type, $value) {
     if ($type == 'account') {
       if (!is_array($value)) {
-        throw new Exception($type . ' must be an array.');
+        throw new \Exception($type . ' must be an array.');
       }
     } 
     else {
       if (is_array($value)) {
-        throw new Exception($type . ' must be a string.');
+        throw new \Exception($type . ' must be a string.');
       }
     }
     return TRUE;

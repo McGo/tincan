@@ -10,14 +10,14 @@ interface TinCanPackageInterface {
   function getActivities();
   
   /**
-   * @return array parsed array structure of tincan.xml
+   * @return array structure of tincan.xml
    */
-  function getManifest();
+  function getMetadata();
   
   /**
    * 
-   * @param array $manifest
+   * @param array $metadata
    */
-  function setManifest($manifest = array());
+  function setMetadata($metadata = array());
   
 }

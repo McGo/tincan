@@ -38,8 +38,18 @@ class IdentifiedGroup extends GroupBase {
     
     if (!is_null($members)) {
       $this->setMember($members);
+      $this->addArray(array('member' => $this->makeMemberArray($members)));
     }
     
+  }
+  
+  /**
+   * 
+   * @param string $name
+   */
+  public function setName($name) {
+    $this->name = $name;
+    $this->addArray(array('name' => $name));
   }
 
 }

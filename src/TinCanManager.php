@@ -105,7 +105,7 @@ class TinCanManager implements TinCanManagerInterface {
     $xml = new \DOMDocument();
     $xml->load($schemaFile);
 
-    if (!$xml->schemaValidate(__DIR__ . '/static/tincan.xsd')) {
+    if (!$xml->schemaValidate(__DIR__ . '/tincan.xsd')) {
       return FALSE;
     }
     return TRUE;

@@ -27,7 +27,7 @@ trait ObjectTrait {
    */
   public function setObjectType($objectType) {
     $this->objectType = $objectType;
-    $this->addArray('objectType', $objectType);
+    $this->addArray(array('objectType' => $objectType));
   }
   
 }
