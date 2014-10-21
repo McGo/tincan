@@ -10,6 +10,9 @@ namespace GO1\LMS\TinCan;
 use GO1\LMS\TinCan\Statement\Statement;
 use GO1\LMS\TinCan\Object\InverseIdentity\InverseIdentity;
 use GO1\LMS\TinCan\Object\Activity\Activity;
+use GO1\LMS\TinCan\Object\Activity\ActivityDefinition;
+use GO1\LMS\TinCan\Object\Activity\InteractionActivity;
+use GO1\LMS\TinCan\Object\Activity\InteractionComponent;
 use GO1\LMS\TinCan\Object\StatementRef;
 use GO1\LMS\TinCan\Object\SubStatement;
 use GO1\LMS\TinCan\Object\Actor\ActorInterface;
@@ -140,5 +143,26 @@ class TinCanFactory implements TinCanFactoryInterface {
    */
   public function createAttachment($usageType, $display, $contentType, $length, $sha2) {
     return new Attachment($usageType, $display, $contentType, $length, $sha2);
+  }
+  
+  /**
+   * 
+   */
+  public function createActivityDefinition() {
+    return new ActivityDefinition();
+  }
+  
+  /**
+   * 
+   */
+  public function createInteractionActivity() {
+    return new InteractionActivity();
+  }
+  
+  /**
+   * 
+   */
+  public function createInteractionComponent($id) {
+    return new InteractionComponent($id);
   }
 }

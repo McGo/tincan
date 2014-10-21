@@ -36,4 +36,5 @@ trait ArrayTrait {
       return $this->$property;
     }
   }
+  
 }

@@ -181,9 +181,35 @@ class JsonParser implements JsonParserInterface {
       $statement = $this->parseStatement($jsonObject);
     }
 
-    $this->factory->createObject($type, $id, $name, $members, $statement);
+    return $this->factory->createObject($type, $id, $name, $members, $statement);
   }
 
+  protected function parseActivity($jsonObject) {
+    if ($jsonObject->definition) {
+      $definition = $this->parseActivityDefinition($jsonObject->definition);
+    }
+  }
+  
+  protected function parseActivityDefinition($jsonObject) {
+    $definition = $this->factory->createActivityDefinition();
+    if (isset($jsonObject->name)) {
+      $definition->setName($this->parseLanguageMap($jsonObject->name));
+    }
+    if (isset($jsonObject->description)) {
+      $definition->setDescription($this->parseLanguageMap($jsonObject->name));
+    }
+    if (isset($jsonObject->type)) {
+      $definition->setType($jsonObject->type);
+    }
+    if (isset($jsonObject->moreInfo)) {
+      $definition->setMoreInfo($jsonObject->moreInfo);
+    }
+    
+    
+    
+    return $definition;
+  }
+  
   /**
    * @{inheritdoc}
    */
