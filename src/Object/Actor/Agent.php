@@ -25,7 +25,7 @@ class Agent implements ActorInterface {
    */
   public function __construct(InverseIdentity $id, $name = NULL) {
     
-    $this->setObjectType(self::OBJECT_TYPE);
+//    $this->setObjectType(self::OBJECT_TYPE);
     
     $this->setId($id);
     

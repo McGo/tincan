@@ -2,6 +2,9 @@
 
 namespace GO1\LMS\TinCan;
 
+use GO1\LMS\TinCan\Package\PackageInterface;
+use GO1\LMS\TinCan\Object\Actor\ActorInterface;
+
 interface TinCanManagerInterface {
   
   /**
@@ -31,6 +34,6 @@ interface TinCanManagerInterface {
    * @param \GO1\LMS\TinCan\Object\Actor\ActorInterface
    * @return string
    */
-  function buildLaunchUrl($basePath, PackageInterface $package, ActorInterface $agent);
+  function buildLaunchUrl($basePath, PackageInterface $package, ActorInterface $agent, $registration = NULL);
   
 }

@@ -2,9 +2,10 @@
 
 namespace GO1\LMS\TinCan;
 
-use GO1\LMS\TinCan\Object\Actor\Agent;
+use GO1\LMS\TinCan\Object\Actor\ActorInterface;
 use GO1\LMS\TinCan\LRS\LRSInterface;
 use GO1\LMS\TinCan\Package\PackageInterface;
+use GO1\LMS\TinCan\Package\Package;
 
 class TinCanManager implements TinCanManagerInterface {
 
@@ -35,7 +36,7 @@ class TinCanManager implements TinCanManagerInterface {
    * @param Agent $agent
    * @return string
    */
-  public function buildLaunchUrl($basePath, PackageInterface $package, Agent $agent, $registration = NULL) {
+  public function buildLaunchUrl($basePath, PackageInterface $package, ActorInterface $agent, $registration = NULL) {
     $queryString = array();
     
     if (!is_null($registration)) {
