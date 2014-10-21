@@ -67,7 +67,7 @@ class TinCanManager implements TinCanManagerInterface {
    * @param string $schemaFile path to tincan.xml
    * @return boolean
    */
-  public function validateTinCanSchema($schemaFile) {
+  public function validateSchemaFile($schemaFile) {
     $xml = new \DOMDocument();
     $xml->load($schemaFile);
 

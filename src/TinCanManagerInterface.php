@@ -19,7 +19,7 @@ interface TinCanManagerInterface {
    * @schemaFile path to tincan.xml
    * validate tincan.xsd
    */
-  function validateTinCanSchema($schemaFile);
+  function validateSchemaFile($schemaFile);
 
   /**
    * @schemaFile: path to tincan.xml

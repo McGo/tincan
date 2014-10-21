@@ -7,7 +7,7 @@ use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Exception\RequestException;
 use GO1\LMS\TinCan\Parser\JsonParserInterface;
 
-class LRSRepositoryBase implements LRSRepositoryInterface {
+class LRSRepository implements LRSRepositoryInterface {
 
   protected $httpClient;
   protected $lrs;

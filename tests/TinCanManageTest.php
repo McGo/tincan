@@ -32,12 +32,11 @@ class TinCanManagerTest extends \PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @covers TinCanManager::validateTinCanSchema
+   * @covers TinCanManager::validateSchemaFile
    */
-  public function testValidateTinCanSchema() {
+  public function testValidateSchemaFile() {
     $package = $this->manager->createPackageDirectory($this->archiveFile, $this->dirPath);
-    $this->assertTrue($this->manager->validateTinCanSchema($package->getSchemaFile()));
-    $this->assertFalse($this->manager->validateTinCanSchema('nowhere'));
+    $this->assertTrue($this->manager->validateSchemaFile($package->getSchemaFile()));
   }
   
   /**
