@@ -4,69 +4,27 @@ namespace GO1\LMS\TinCan\Package;
 
 class Package implements PackageInterface {
 
-  protected $metadata;
+  private $xmlDoc;
   protected $schemaFile;
 
   public function __construct($schemaFile) {
     $this->schemaFile = $schemaFile;
-    $this->setMetadata($this->parseMetadata($schemaFile));
-  }
-
-  /**
-   * Parse tincan.xml to array.
-   * @return type
-   */
-  public function parseMetadata($schemaFile) {
-    $content = simplexml_load_file($schemaFile);
-    // SimpleXMLElement to JSON string
-    $json = json_encode($content);
-    
-    return json_decode($json, TRUE);
+    $this->xmlDoc = simplexml_load_file($schemaFile);
+    $this->xmlDoc->registerXPathNamespace('x', 'http://projecttincan.com/tincan.xsd');
   }
   
   /**
    * @{inheritdoc}
    */
   public function getActivities() {
-    return isset($this->metadata['activities']) ? $this->metadata['activities'] : array();
+    return $this->xmlDoc->xpath('/x:tincan/x:activities/x:activity');
   }
   
   /**
    * Get the actity has properties launch
    */
   public function getLaunchActivity() {
-    // Get activities
-    $activities = $this->getActivities();
-    
-    // The activities has only activity
-    if(isset($activities['activity']['@attributes'])) {
-      if (isset($activities['activity']['launch'])) {
-        return $activities['activity']['@attributes']['id'];
-      }
-    }
-    else { // The activities has more activity
-      foreach ($activities['activity'] as $activity) {
-        // Looking for main activity of package.
-        if (isset($activity['launch'])) {
-          return $activity['@attributes']['id'];
-        }
-      }
-    }
-    return FALSE;
-  }
-
-  /**
-   * @{inheritdoc}
-   */
-  public function getMetadata() {
-    return $this->metadata;
-  }
-
-  /**
-   * @{inheritdoc}
-   */
-  public function setMetadata($metadata = array()) {
-    $this->metadata = $metadata;
+    return reset($this->xmlDoc->xpath('(/x:tincan/x:activities/x:activity[x:launch])[1]')); 
   }
   
   /**
