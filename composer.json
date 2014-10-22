@@ -1,5 +1,5 @@
 {
-  "name":"go1/lms/tincan",
+  "name":"adurolms/tincan",
   "type": "library",
   "homepage": "http://adurolms.com",
   "description": "Tin Can client library",
