@@ -4,15 +4,16 @@ namespace GO1\LMS\TinCan\LRS;
 
 use GO1\LMS\TinCan\TinCanAPI;
 
-class StatementRequestParam {
+// @todo reconsider class naming and namespace
+class StatementGetParam {
   
   protected $key;
   
   protected $value;
   
-  public function __construct($key, $value) {
-    if (in_array($key, TinCanAPI::$statementRequestParams)) {
-      $this->key = $key;
+  public function __construct($name, $value) {
+    if (in_array($name, TinCanAPI::$statementRequestParams)) {
+      $this->name = $name;
       $this->value = $value;
     }
     else {
@@ -20,9 +21,11 @@ class StatementRequestParam {
     }
   }
   
-  public function toArray() {
-    return array(
-      $this->key => $this->value
-    );
+  public function getName() {
+    return $this->name;
+  }
+  
+  public function getValue() {
+    return $this->value;
   }
 }
