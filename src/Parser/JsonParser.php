@@ -223,7 +223,7 @@ class JsonParser implements JsonParserInterface {
         foreach ($jsonObject->$list as $interactionJsonObject) {
           $interactionsArray[] = $this->parseInteractionComponent($interactionJsonObject);
         }
-        $definition->setComponents($list, $interactionsArray, $definition->interactionType);
+        $definition->setComponents($list, $interactionsArray, $interactionJsonObject->interactionType);
       }
     }
     

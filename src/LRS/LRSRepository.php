@@ -9,6 +9,8 @@ use GO1\LMS\TinCan\Parser\JsonParserInterface;
 
 class LRSRepository implements LRSRepositoryInterface {
 
+  const GET_ENDPOINT = 'statements';
+
   protected $httpClient;
   protected $lrs;
   protected $parser;
@@ -22,54 +24,54 @@ class LRSRepository implements LRSRepositoryInterface {
   /**
    * @{inheritdoc}
    */
-  public function getStatements() {
-    return $this->sendRequest('statements');
-  }
-  
-  /**
-   * @{inheritdoc}
-   */
-  public function getStatement($actor, $verb, $object) {
-    $params = array(
-      'agent' => $actor,
-      'verb' => $verb,
-      'activity' => $object,
-    );
-    $statements = $this->sendRequest('statements', $params);
-    return !empty($statements) ? reset($statements) : FALSE;
+  public function getStatements($params = array()) {
+    return $this->sendRequest($this->lrs->getEndpoint() . self::GET_ENDPOINT, $params);
   }
 
-  /**
-   * @{inheritdoc}
-   */
-  public function getStatementById($statementID) {
-    $statements = $this->sendRequest('statements', array('statementId' => $statementID));
-    return !empty($statements) ? reset($statements) : FALSE;
-  }
-
-  /**
-   * @{inheritdoc}
-   */
-  public function getStatementsHasActor($actor, $conditions = array()) {
-    $params = array_merge(array('agent' => $actor), $conditions);
-    return $this->sendRequest('statements', $params);
-  }
-
-  /**
-   * @{inheritdoc}
-   */
-  public function getStatementsHasObject($object, $conditions = array()) {
-    $params = array_merge(array('activity' => $object), $conditions);
-    return $this->sendRequest('statements', $params);
-  }
-
-  /**
-   * @{inheritdoc}
-   */
-  public function getStatementsHasVerb($verbID, $conditions = array()) {
-    $params = array_merge(array('verb' => $verbID), $conditions);
-    return $this->sendRequest('statements', $params);
-  }
+//  /**
+//   * @{inheritdoc}
+//   */
+//  public function getStatement($actor, $verb, $object) {
+//    $params = array(
+//      'agent' => $actor,
+//      'verb' => $verb,
+//      'activity' => $object,
+//    );
+//    $statements = $this->sendRequest('statements', $params);
+//    return !empty($statements) ? reset($statements) : FALSE;
+//  }
+//
+//  /**
+//   * @{inheritdoc}
+//   */
+//  public function getStatementById($statementID) {
+//    $statements = $this->sendRequest('statements', array('statementId' => $statementID));
+//    return !empty($statements) ? reset($statements) : FALSE;
+//  }
+//
+//  /**
+//   * @{inheritdoc}
+//   */
+//  public function getStatementsHasActor($actor, $conditions = array()) {
+//    $params = array_merge(array('agent' => $actor), $conditions);
+//    return $this->sendRequest('statements', $params);
+//  }
+//
+//  /**
+//   * @{inheritdoc}
+//   */
+//  public function getStatementsHasObject($object, $conditions = array()) {
+//    $params = array_merge(array('activity' => $object), $conditions);
+//    return $this->sendRequest('statements', $params);
+//  }
+//
+//  /**
+//   * @{inheritdoc}
+//   */
+//  public function getStatementsHasVerb($verbID, $conditions = array()) {
+//    $params = array_merge(array('verb' => $verbID), $conditions);
+//    return $this->sendRequest('statements', $params);
+//  }
 
   /**
    * 
@@ -78,17 +80,17 @@ class LRSRepository implements LRSRepositoryInterface {
    */
   protected function makeRequest($url) {
     return $this->httpClient->createRequest('GET', $url, array(
-        'headers' => array(
-          'X-Experience-API-Version' => $this->lrs->getVersion(),
-          'Content-Type' => 'application/json',
-        ),
-        'auth' => array(
-          $this->lrs->getUsername(),
-          $this->lrs->getPassword(),
-        )
+          'headers' => array(
+            'X-Experience-API-Version' => $this->lrs->getVersion(),
+            'Content-Type' => 'application/json',
+          ),
+          'auth' => array(
+            $this->lrs->getUsername(),
+            $this->lrs->getPassword(),
+          )
     ));
   }
-  
+
   /**
    * 
    * @param RequestInterface $request
@@ -100,7 +102,7 @@ class LRSRepository implements LRSRepositoryInterface {
       $query->set($name, $value);
     }
   }
-  
+
   /**
    * 
    * @param RequestInterface $request
@@ -114,7 +116,7 @@ class LRSRepository implements LRSRepositoryInterface {
     }
     return '[]';
   }
-  
+
   /**
    * 
    * @param string $url
@@ -130,10 +132,10 @@ class LRSRepository implements LRSRepositoryInterface {
 
     // Execute request
     $json = $this->executeRequest($request);
-    
+
     return $this->parse($json);
   }
-  
+
   /**
    * 
    * @param string $json
@@ -142,7 +144,7 @@ class LRSRepository implements LRSRepositoryInterface {
   public function parse($json) {
     return $this->parser->parse($json);
   }
-  
+
   /**
    * Verify the connection to LRS
    * @return type
@@ -150,11 +152,11 @@ class LRSRepository implements LRSRepositoryInterface {
   public function verifyConnection() {
     // Build request
     $request = $this->makeRequest('statements');
-    $params  = array('limit' => 1);
-    
+    $params = array('limit' => 1);
+
     // Set parameters
     $this->setRequestParams($request, $params);
-    
+
     try {
       $reponse = $this->httpClient->send($request);
     } catch (RequestException $ex) {

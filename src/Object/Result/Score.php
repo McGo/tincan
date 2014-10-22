@@ -7,6 +7,7 @@
 
 namespace GO1\LMS\TinCan\Object\Result;
 
+use GO1\LMS\TinCan\ArrayTrait;
 use GO1\LMS\TinCan\Object\ObjectInterface;
 
 class Score implements ObjectInterface {
@@ -48,7 +49,7 @@ class Score implements ObjectInterface {
    * 
    * @param float $raw
    */
-  protected function setRaw($raw) {
+  public function setRaw($raw) {
     if (isset($this->max) && $raw > $this->max) {
       throw new Exception('raw property can\'t be greater than max.');
     }
@@ -65,7 +66,7 @@ class Score implements ObjectInterface {
    * 
    * @param float $min
    */
-  protected function setMin($min) {
+  public function setMin($min) {
     if (isset($this->max) && $min > $this->max) {
       throw new Exception('min property can\'t be greater than max.');
     }
@@ -77,7 +78,7 @@ class Score implements ObjectInterface {
    * 
    * @param float $max
    */
-  protected function setMax($max) {
+  public function setMax($max) {
      if (isset($this->min) && $max < $this->min) {
       throw new Exception('max property can\'t be less than max.');
     }

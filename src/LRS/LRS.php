@@ -2,6 +2,8 @@
 
 namespace GO1\LMS\TinCan\LRS;
 
+use GO1\LMS\TinCan\TinCanAPI;
+
 class LRS implements LRSInterface {
   
   protected $username;
@@ -14,7 +16,7 @@ class LRS implements LRSInterface {
     $this->username = $username;
     $this->password = $password;
     $this->setEndpoint($endpoint);
-    $this->setVersion(\TinCan\Version::latest());
+    $this->setVersion(TinCanAPI::VERSION);
     $this->setAuth();
   }
   

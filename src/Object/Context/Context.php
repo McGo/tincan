@@ -11,9 +11,10 @@ use GO1\LMS\TinCan\Misc\Extension;
 use GO1\LMS\TinCan\Object\StatementRef;
 use GO1\LMS\TinCan\Object\Actor\ActorInterface;
 use GO1\LMS\TinCan\Object\Actor\GroupBase;
+use GO1\LMS\TinCan\ArrayTrait;
 
 class Context {
-
+  use ArrayTrait;
   /**
    *
    * @var string UUID

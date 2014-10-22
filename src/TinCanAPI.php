@@ -92,5 +92,25 @@ class TinCanAPI {
     'version', 
     'authority'
   );
+  
+  /**
+   * @see https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#details-33
+   */
+  static $statementRequestParams = array(
+    'statementId',
+    'voidedStatementId',
+    'agent',
+    'verb',
+    'activity',
+    'registration',
+    'related_activities',
+    'related_agents',
+    'since',
+    'until',
+    'limit',
+    'format',
+    'attachments',
+    'ascending'
+  );
 }
 
