@@ -26,7 +26,8 @@ class Package implements PackageInterface {
    * Get the actity has child launch element
    */
   public function getLaunchActivity() {
-    return reset($this->xmlDoc->xpath('(/x:tincan/x:activities/x:activity[x:launch])[1]')); 
+    $result = $this->xmlDoc->xpath('(/x:tincan/x:activities/x:activity[x:launch])[1]');
+    return reset($result); 
   }
   
   /**
@@ -47,8 +48,10 @@ class Package implements PackageInterface {
    * @{inheritdoc}
    */
   public function getTopGranularActivityId() {
-    return (string) reset($this->xmlDoc->xpath('(/x:tincan/x:activities/x:activity[@type=\'' . 
-        TinCanAPI::$topGranularActivityType . '\'])[1]'))['id']; 
+    $result = $this->xmlDoc->xpath('(/x:tincan/x:activities/x:activity[@type=\'' . 
+        TinCanAPI::$topGranularActivityType . '\'])[1]');
+    $object = reset($result);
+    return (string) $object['id']; 
   }
   
   /**
