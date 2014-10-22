@@ -7,7 +7,6 @@
     }
   },
   "require": {
-    "rusticisoftware/tincan": "~0.0",
     "guzzlehttp/guzzle": "~4.2"
   }
 }

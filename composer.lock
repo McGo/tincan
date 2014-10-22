@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8fe4dfd4949324a74b41f9ca4369fc8e",
+    "hash": "6a5086d2aa5fbbc2874e027d9401f732",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -123,55 +123,6 @@
                 "stream"
             ],
             "time": "2014-08-17 21:15:53"
-        },
-        {
-            "name": "rusticisoftware/tincan",
-            "version": "0.11.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/RusticiSoftware/TinCanPHP.git",
-                "reference": "0a2b5e7490ab4d3aff8778d8a09a350c8010efce"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/RusticiSoftware/TinCanPHP/zipball/0a2b5e7490ab4d3aff8778d8a09a350c8010efce",
-                "reference": "0a2b5e7490ab4d3aff8778d8a09a350c8010efce",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpdocumentor/phpdocumentor": "2.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "TinCan\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Brian J. Miller",
-                    "email": "brian.miller@tincanapi.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Tin Can API Library",
-            "homepage": "http://rusticisoftware.github.io/TinCanPHP/",
-            "keywords": [
-                "Experience API",
-                "e-learning",
-                "scorm",
-                "tin can",
-                "tincan",
-                "xAPI"
-            ],
-            "time": "2014-07-23 15:03:13"
         }
     ],
     "packages-dev": [
