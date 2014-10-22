@@ -30,6 +30,14 @@ class PackageTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetLaunchActivityId() {
     $id = $this->package->getLaunchActivityId();
-    $this->assertEquals($id, 'http://tincanapi.com/GolfExample_TCAPI');
+    $this->assertEquals('http://tincanapi.com/GolfExample_TCAPI', $id);
+  }
+  
+  /**
+   * @covers \GO1\LMS\TinCan\Package\Package::getTopGranularActivityId
+   */
+  public function testGetTopGranularActivityId() {
+    $topGranularActivityId = $this->package->getTopGranularActivityId();
+    $this->assertEquals('http://tincanapi.com/GolfExample_TCAPI', $topGranularActivityId);
   }
 }

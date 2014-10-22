@@ -80,7 +80,7 @@ class Score implements ObjectInterface {
    */
   public function setMax($max) {
      if (isset($this->min) && $max < $this->min) {
-      throw new Exception('max property can\'t be less than max.');
+      throw new Exception('max property can\'t be less than min.');
     }
     $this->max = $max;
     $this->addArray(array('max' => $max));

@@ -18,4 +18,11 @@ interface PackageInterface {
    * @return string
    */
   function getLaunchValue();
+  
+  /**
+   * @see http://adlnet.gov/expapi/activities/course
+   * Top level of granularity activity in the package
+   * @return 
+   */
+  function getTopGranularActivityId();
 }

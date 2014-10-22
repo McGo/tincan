@@ -2,6 +2,8 @@
 
 namespace GO1\LMS\TinCan\Package;
 
+use GO1\LMS\TinCan\TinCanAPI;
+
 class Package implements PackageInterface {
 
   private $xmlDoc;
@@ -39,6 +41,14 @@ class Package implements PackageInterface {
    */
   public function getLaunchValue() {
     return (string) $this->getLaunchActivity()->launch;
+  }
+  
+  /**
+   * @{inheritdoc}
+   */
+  public function getTopGranularActivityId() {
+    return (string) reset($this->xmlDoc->xpath('(/x:tincan/x:activities/x:activity[@type=\'' . 
+        TinCanAPI::$topGranularActivityType . '\'])[1]'))['id']; 
   }
   
   /**

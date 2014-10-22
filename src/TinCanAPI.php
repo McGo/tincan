@@ -112,5 +112,10 @@ class TinCanAPI {
     'attachments',
     'ascending'
   );
+  
+  /**
+   * Top granular activity type
+   */
+  static $topGranularActivityType = 'http://adlnet.gov/expapi/activities/course';
 }
 
