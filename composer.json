@@ -1,12 +1,22 @@
 {
   "name":"go1/lms/tincan",
-  "license": "proprietary",
+  "type": "library",
+  "homepage": "http://adurolms.com",
+  "description": "Tin Can client library",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Khoa Pham",
+      "email": "khoa@go1.com.au",
+    }
+  ],
   "autoload": {
     "psr-4": {
       "GO1\\LMS\\TinCan\\": "src"
     }
   },
   "require": {
-    "guzzlehttp/guzzle": "~4.2"
+    "guzzlehttp/guzzle": "~4.2",
+    "php": ">=5.4.0"
   }
 }
