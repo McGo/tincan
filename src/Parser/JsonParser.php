@@ -43,7 +43,10 @@ class JsonParser implements JsonParserInterface {
   public function parseStatements($statements) {
     $statementsArray = array();
     foreach ($statements as $statementJsonObject) {
-      $statementsArray[] = $this->parseStatement($statementJsonObject);
+      $statement = $this->parseStatement($statementJsonObject);
+      if (!is_null($statement)) {
+        $statementsArray[] = $statement;
+      }
     }
     return $statementsArray;
   }
