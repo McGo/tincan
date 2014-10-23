@@ -59,7 +59,7 @@ interface TinCanFactoryInterface {
    * @param Statement
    * @return ObjectInterface
    */
-  function createObject($type = 'Activity', $id = NULL, $name = NULL,
+  function createObject($type = NULL, $id = NULL, $name = NULL,
       $members = NULL, Statement $statement = NULL);
   
   /**

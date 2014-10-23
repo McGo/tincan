@@ -183,7 +183,9 @@ class JsonParser implements JsonParserInterface {
 
     $object = $this->factory->createObject($type, $id, $name, $members, $statement);
     
-    $this->parseIntoActivity($object, $jsonObject);
+    if (!is_null($object)) {
+      $this->parseIntoActivity($object, $jsonObject);
+    }
     
     // @todo Agent, Group, SubStatement, StatementRef
     

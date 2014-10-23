@@ -207,4 +207,8 @@ class Statement {
     }
     return TRUE;
   }
+  
+  public function getId() {
+    return $this->id;
+  }
 }

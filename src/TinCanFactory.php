@@ -65,10 +65,10 @@ class TinCanFactory implements TinCanFactoryInterface {
   /**
    * @{inheritdoc}
    */
-  public function createObject($type = 'Activity', $id = NULL, $name = NULL,
+  public function createObject($type = NULL, $id = NULL, $name = NULL,
       $members = NULL, Statement $statement = NULL) {
-    
-    if ($type == Activity::OBJECT_TYPE && !is_null($id)) {
+
+    if (($type == NULL || $type == Activity::OBJECT_TYPE) && !is_null($id)) {
       return new Activity($id);
     }
     

@@ -87,7 +87,8 @@ class Result implements ObjectInterface {
    * @param string $duration
    */
   public function setDuration($duration) {
-    $this->duration = new \DateInterval($duration);
+    $this->duration = $duration;
+    //\DateInterval::createFromDateString($duration);
     $this->addArray(array('duration' => $duration));
   }
     
