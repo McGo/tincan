@@ -86,14 +86,6 @@ interface TinCanFactoryInterface {
   
   /**
    * 
-   * @param string $key 
-   * @param array $value
-   * @return \GO1\LMS\TinCan\Object\Context\ContextActivity
-   */
-  function createContextActivity($key, $value);
-  
-  /**
-   * 
    * @param string $key
    * @param mixed $value
    * @return \GO1\LMS\TinCan\Misc\Extension

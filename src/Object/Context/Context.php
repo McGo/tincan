@@ -102,30 +102,15 @@ class Context {
    * @param type $activities
    */
   public function setContextActivities($activities) {
-    if ($this->validateContextActivities($activities)) {
-      $this->contextActivities = $activities;
+    $this->contextActivities = $activities;
 
-      $activitiesArray = array();
-      foreach ($activities as $activity) {
-        $activitiesArray[] = $activity->toArray();
-      }
-      $this->addArray(array('contextActivities' => $activitiesArray));
-    }
-  }
-
-  /**
-   * 
-   * @param array $activities
-   * @return boolean
-   * @throws Exception
-   */
-  protected function validateContextActivities($activities) {
-    foreach ($activities as $activity) {
-      if (!$activity instanceof ContextActivity) {
-        throw new Exception($activity . ' must be ContextActivity instance.');
+    $activitiesArray = array();
+    foreach ($activities as $group => $members) {
+      foreach ($members as $activity) {
+        $activitiesArray[$group][] = $activity->toArray();
       }
     }
-    return TRUE;
+    $this->addArray(array('contextActivities' => $activitiesArray));
   }
 
   /**

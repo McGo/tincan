@@ -25,7 +25,6 @@ use GO1\LMS\TinCan\Misc\LanguageMap;
 use GO1\LMS\TinCan\Object\Result\Result;
 use GO1\LMS\TinCan\Object\Result\Score;
 use GO1\LMS\TinCan\Object\Context\Context;
-use GO1\LMS\TinCan\Object\Context\ContextActivity;
 use GO1\LMS\TinCan\Misc\Extension;
 use GO1\LMS\TinCan\Object\Attachment;
 
@@ -121,13 +120,6 @@ class TinCanFactory implements TinCanFactoryInterface {
    */
   public function createContext() {
     return new Context;
-  }
-  
-  /**
-   * @{inheritdoc}
-   */
-  public function createContextActivity($key, $value) {
-    return new ContextActivity($key, $value);
   }
   
   /**

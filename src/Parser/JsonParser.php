@@ -185,13 +185,13 @@ class JsonParser implements JsonParserInterface {
     }
 
     $object = $this->factory->createObject($type, $id, $name, $members, $statement);
-    
+
     if (!is_null($object)) {
       $this->parseIntoActivity($object, $jsonObject);
     }
-    
+
     // @todo Agent, Group, SubStatement, StatementRef
-    
+
     return $object;
   }
 
@@ -201,7 +201,7 @@ class JsonParser implements JsonParserInterface {
       $activity->setDefinition($definition);
     }
   }
-  
+
   protected function parseActivityDefinition($jsonObject) {
     $definition = $this->factory->createActivityDefinition();
     if (isset($jsonObject->name)) {
@@ -216,11 +216,11 @@ class JsonParser implements JsonParserInterface {
     if (isset($jsonObject->moreInfo)) {
       $definition->setMoreInfo($jsonObject->moreInfo);
     }
-    
+
     if (isset($jsonObject->interactionType)) {
-       $definition->setInteractionType($jsonObject->interactionType);
+      $definition->setInteractionType($jsonObject->interactionType);
     }
-    
+
     // @todo double check terminology of `component list`
     foreach (TinCanAPI::$componentLists as $list) {
       if (isset($jsonObject->$list)) {
@@ -231,14 +231,14 @@ class JsonParser implements JsonParserInterface {
         $definition->setComponents($list, $interactionsArray, $jsonObject->interactionType);
       }
     }
-    
+
     if (isset($jsonObject->correctResponsePatterns)) {
       $definition->setCorrectResponsePatterns((array) $jsonObject->correctResponsePatterns);
     }
-    
+
     return $definition;
   }
-  
+
   /**
    * 
    * @param stdClasd $jsonObject
@@ -254,7 +254,7 @@ class JsonParser implements JsonParserInterface {
     }
     return NULL;
   }
-  
+
   /**
    * @{inheritdoc}
    */
@@ -321,9 +321,8 @@ class JsonParser implements JsonParserInterface {
       $context->setTeam($this->parseActor($jsonObject->team));
     }
 
-    // @todo refactor put the array to parser
-    $contextActivities = $this->parseContextActivities($jsonObject);
-    if (!is_null($contextActivities)) {
+    if (isset($jsonObject->contextActivities)) {
+      $contextActivities = $this->parseContextActivities($jsonObject->contextActivities);
       $context->setContextActivities($contextActivities);
     }
 
@@ -357,28 +356,15 @@ class JsonParser implements JsonParserInterface {
    * @param stdClass $jsonObject
    */
   public function parseContextActivities($jsonObject) {
-    if (isset($jsonObject->contextActivities)) {
-      $activities = array();
-      foreach ($jsonObject->contextActivities as $activityJsonObject) {
-        $activities[] = $this->parseContextActivity($activityJsonObject);
-      }
-    }
-    return NULL;
-  }
-
-  /**
-   * 
-   */
-  public function parseContextActivity($jsonObject) {
+    $activitiesArray = array();
     foreach (TinCanAPI::$contextActivityKeys as $key) {
       if (isset($jsonObject->$key)) {
-        $activitiesArray = array();
         foreach ($jsonObject->$key as $activity) {
-          $activitiesArray[] = $this->parseObject($activity);
+          $activitiesArray[$key][] = $this->parseObject($activity);
         }
-        return $this->factory->createContextActivity($key, $activitiesArray);
       }
     }
+    return $activitiesArray;
   }
 
   /**

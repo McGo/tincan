@@ -238,4 +238,7 @@ class Statement {
     return $this->verb;
   }
 
+  public function getContext() {
+    return $this->context;
+  }
 }
