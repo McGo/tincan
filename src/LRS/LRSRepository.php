@@ -2,10 +2,11 @@
 
 namespace GO1\LMS\TinCan\LRS;
 
+use GO1\LMS\TinCan\TinCanAPI;
+use GO1\LMS\TinCan\Parser\JsonParserInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Exception\RequestException;
-use GO1\LMS\TinCan\Parser\JsonParserInterface;
 
 class LRSRepository implements LRSRepositoryInterface {
 
@@ -36,7 +37,7 @@ class LRSRepository implements LRSRepositoryInterface {
    */
   protected function validateParams($params) {
     foreach ($params as $param) {
-      if (!$param instanceof StatementGetParam) {
+      if (!in_array(key($param), TinCanAPI::$statementRequestParams)) {
         return FALSE;
       }
     }
@@ -68,7 +69,7 @@ class LRSRepository implements LRSRepositoryInterface {
   protected function setRequestParams(RequestInterface $request, $params = array()) {
     $query = $request->getQuery();
     foreach ($params as $param) {
-      $query->set($param->getName(), $param->getValue());
+      $query->set(key($param), current($param));
     }
   }
 
