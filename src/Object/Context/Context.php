@@ -112,6 +112,10 @@ class Context {
     }
     $this->addArray(array('contextActivities' => $activitiesArray));
   }
+  
+  public function getContextActivities() {
+    return $this->contextActivities;
+  }
 
   /**
    * 
@@ -181,4 +185,10 @@ class Context {
     return TRUE;
   }
 
+  /**
+   * 
+   */
+  public function getRegistration() {
+    return $this->registration;
+  }
 }

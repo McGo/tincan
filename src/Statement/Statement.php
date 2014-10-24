@@ -241,4 +241,23 @@ class Statement {
   public function getContext() {
     return $this->context;
   }
+  
+  public function getParentActivities() {
+    $context = $this->getContext();
+    if (!is_null($context)) {
+      $activities = $context->getContextActivities();
+      //parent activities are in parent group
+      if (isset($activities['parent'])) {
+        return $activities['parent'];
+      }
+    }
+  }
+  
+  public function getRegistration() {
+    $context = $this->getContext();
+    if (!is_null($context)) {
+      return $context->getRegistration();
+    }
+  }
+    
 }
