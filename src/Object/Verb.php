@@ -50,4 +50,10 @@ class Verb implements ObjectInterface {
     $this->addArray(array('id' => $id));
   }
 
+  /**
+   * 
+   */
+  public function getId() {
+    return $this->id;
+  }
 }

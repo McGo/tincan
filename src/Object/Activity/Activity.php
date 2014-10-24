@@ -49,6 +49,10 @@ class Activity implements ObjectInterface {
     $this->addArray(array('id' => $id));
   }
   
+  public function getId() {
+    return $this->id;
+  }
+  
   /**
    * 
    */

@@ -43,4 +43,7 @@ class Agent implements ActorInterface {
     $this->addArray(array('name' => $name));
   }
 
+  public function getName() {
+    return $this->name;
+  }
 }
