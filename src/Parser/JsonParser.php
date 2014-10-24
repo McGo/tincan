@@ -85,7 +85,7 @@ class JsonParser implements JsonParserInterface {
         }
 
         if (isset($statementJsonObject->stored)) {
-          $statement->setTimestamp($statementJsonObject->stored);
+          $statement->setStored($statementJsonObject->stored);
         }
 
         if (isset($statementJsonObject->authority)) {
