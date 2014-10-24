@@ -15,70 +15,72 @@ use GO1\LMS\TinCan\Object\Attachment;
 use GO1\LMS\TinCan\ArrayTrait;
 
 class Statement {
+
   use ArrayTrait;
+
   /**
    *
    * @var string UUID
    */
   protected $id;
-  
+
   /**
    * 
    * @var ActorInterface
    */
   protected $actor;
-  
+
   /**
    * 
    * @var Verb
    */
   protected $verb;
-  
+
   /**
    *
    * @var ObjectInterface
    */
   protected $object;
-  
+
   /**
    *
    * @var ObjectInterface
    */
   protected $result;
-  
+
   /**
    *
    * @var ObjectInterface
    */
   protected $context;
-  
+
   /**
    * @var DateTime
    */
   protected $timestamp;
-  
+
   /**
    * @var DateTime
    */
   protected $stored;
-  
+
   /**
    *
    * @var ActorInterface
    */
   protected $authority;
-  
+
   /**
    *
    * @var string semantic version
    */
   protected $version;
-  
+
   /**
    * @var array
    */
   protected $attachments;
-  
+
   /**
    * 
    */
@@ -87,7 +89,7 @@ class Statement {
     $this->setVerb($verb);
     $this->setObject($object);
   }
-  
+
   /**
    * 
    * @param ActorInterface $actor
@@ -96,7 +98,7 @@ class Statement {
     $this->actor = $actor;
     $this->addArray(array('actor' => $actor->toArray()));
   }
-  
+
   /**
    * 
    * @param Verb $verb
@@ -105,7 +107,7 @@ class Statement {
     $this->verb = $verb;
     $this->addArray(array('verb' => $verb->toArray()));
   }
-  
+
   /**
    * @param ObjectInterface $object
    */
@@ -113,7 +115,7 @@ class Statement {
     $this->object = $object;
     $this->addArray(array('object' => $object->toArray()));
   }
-  
+
   /**
    * 
    * @param string $id UUID
@@ -122,7 +124,7 @@ class Statement {
     $this->id = $id;
     $this->addArray(array('id' => $id));
   }
-  
+
   /**
    * 
    * @param Result $result
@@ -131,7 +133,7 @@ class Statement {
     $this->result = $result;
     $this->addArray(array('result' => $result->toArray()));
   }
-  
+
   /**
    * 
    * @param Context $context
@@ -140,7 +142,7 @@ class Statement {
     $this->context = $context;
     $this->addArray(array('context' => $context->toArray()));
   }
-  
+
   /**
    * 
    * @param string $timestamp
@@ -150,7 +152,7 @@ class Statement {
     $this->timestamp = new \DateTime($timestamp);
     $this->addArray(array('timestamp' => $timestamp));
   }
-  
+
   /**
    * @param string $stored
    * @see https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations
@@ -159,7 +161,7 @@ class Statement {
     $this->stored = new \DateTime($stored);
     $this->addArray(array('stored' => $stored));
   }
-  
+
   /**
    * 
    * @param ActorInterface $authority
@@ -168,7 +170,7 @@ class Statement {
     $this->authority = $authority;
     $this->addArray(array('authority' => $authority->toArray()));
   }
-  
+
   /**
    * 
    * @param string $version
@@ -177,23 +179,23 @@ class Statement {
     $this->version = $version;
     $this->addArray(array('version' => $version));
   }
-  
+
   /**
    * @param array $attachments
    */
   public function setAttachments($attachments) {
     if ($this->validateAttachments($attachments)) {
       $this->attachments = $attachments;
-      
+
       $attachmentsArray = array();
       foreach ($attachments as $attachment) {
         $attachmentsArray[] = $attachment->toArray();
       }
-      
+
       $this->addArray(array('attachments' => $attachmentsArray));
     }
   }
-  
+
   /**
    * 
    * @param array $attachments
@@ -207,8 +209,33 @@ class Statement {
     }
     return TRUE;
   }
-  
+
   public function getId() {
     return $this->id;
   }
+
+  public function getActor() {
+    return $this->actor;
+  }
+
+  public function getStored($format = NULL) {
+    if (!is_null($format)) {
+      return $this->stored->format($format);
+    } else {
+    //  return $this->stored;
+    }
+  }
+
+  public function getResult() {
+    return $this->result;
+  }
+  
+  public function getObject() {
+    return $this->object;
+  }
+  
+  public function getVerb() {
+    return $this->verb;
+  }
+
 }
