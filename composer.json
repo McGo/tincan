@@ -17,5 +17,10 @@
   "require": {
     "guzzlehttp/guzzle": "~4.2",
     "php": ">=5.4.0"
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/go1/lms/{$name}/": ["adurolms/tincan"]
+    }
   }
 }
