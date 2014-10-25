@@ -1,6 +1,5 @@
 {
-  "name":"adurolms/tincan",
-  "type": "library",
+  "name": "adurolms/tincan",
   "homepage": "http://adurolms.com",
   "description": "Tin Can client library",
   "license": "Apache-2.0",
@@ -21,6 +20,8 @@
     "composer/installers": "~1.0"
   },
   "extra": {
-    "installer-name": "go1/lms/tincan"
+    "installer-paths": {
+      "go1/lms/tincan": ["adurolms/tincan"]
+    }
   }
 }
