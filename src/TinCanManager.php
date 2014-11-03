@@ -64,17 +64,19 @@ class TinCanManager implements TinCanManagerInterface {
 
   /**
    * 
-   * @param string $schemaFile path to tincan.xml
+   * @param string $zipFile path to package zip file
    * @return boolean
    */
-  public function validateSchemaFile($schemaFile) {
-    $xml = new \DOMDocument();
-    $xml->load($schemaFile);
-
-    if (!$xml->schemaValidate(__DIR__ . '/tincan.xsd')) {
-      return FALSE;
-    }
-    return TRUE;
+  public function validateSchema($zipFile) {
+    if (file_exists($zipFile)) {
+      $schema = file_get_contents("zip://$zipFile#tincan.xml");
+      $xml = new \DOMDocument();
+      $xml->loadXML($schema);
+      if ($xml->schemaValidate(__DIR__ . '/tincan.xsd')) {
+        return TRUE;
+      }
+    } 
+    return FALSE;
   }
 
   /**

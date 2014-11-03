@@ -16,10 +16,10 @@ interface TinCanManagerInterface {
   function createPackageDirectory($archiveFile, $dirPath);
 
   /**
-   * @schemaFile path to tincan.xml
-   * validate tincan.xsd
+   * @schemaFile path to package zip file
+   * validate with tincan.xsd
    */
-  function validateSchemaFile($schemaFile);
+  function validateSchema($zipFile);
 
   /**
    * @schemaFile: path to tincan.xml
