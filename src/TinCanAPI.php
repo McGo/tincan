@@ -110,7 +110,9 @@ class TinCanAPI {
     'limit',
     'format',
     'attachments',
-    'ascending'
+    'ascending',
+    // Vendor LRS accepts this
+    'offset'
   );
   
   /**
