@@ -79,11 +79,14 @@ class LRSRepository implements LRSRepositoryInterface {
    * @return string
    */
   protected function executeRequest(RequestInterface $request) {
-    $reponse = $this->httpClient->send($request);
-    if ($reponse->getStatusCode() == '200') {
-      $json = $reponse->getBody()->getContents();
-      return $json;
+    $reponse;
+    try {
+      $reponse = $this->httpClient->send($request);
     }
+    catch (\Exception $e) {
+    
+    }
+    return $reponse;
   }
 
   /**
@@ -100,8 +103,12 @@ class LRSRepository implements LRSRepositoryInterface {
     $this->setRequestParams($request, $params);
 
     // Execute request
-    $json = $this->executeRequest($request);
-
+    $response = $this->executeRequest($request);
+    
+    if (!is_null($response) && $response->getStatusCode() == '200') {
+      $json = $response->getBody()->getContents();
+    }
+    
     return $this->parse($json);
   }
 
@@ -119,19 +126,16 @@ class LRSRepository implements LRSRepositoryInterface {
    * @return type
    */
   public function verifyConnection() {
-    // Build request
-    $request = $this->makeRequest('statements');
-    $params = array('limit' => 1);
-
+    $request = $this->makeRequest($this->lrs->getEndpoint() . self::GET_ENDPOINT);
     // Set parameters
-    $this->setRequestParams($request, $params);
-
-    try {
-      $reponse = $this->httpClient->send($request);
-    } catch (RequestException $ex) {
-      return FALSE;
+    $query = $request->getQuery();
+    $query->set('limit', 1);
+    // Execute request
+    $response = $this->executeRequest($request);
+    if (!is_null($response) && $response->getStatusCode() == '200') {
+      return TRUE;
     }
-    return $reponse->getStatusCode() == '200';
+    return FALSE;
   }
 
 }
