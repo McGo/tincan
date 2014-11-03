@@ -53,11 +53,11 @@ class InverseIdentity {
   /**
    * 
    * @param string $type
-   * @throws Exception
+   * @return boolean
    */
   protected function validateType($type) {
     if (!in_array($type, TinCanAPI::$inverseIdentityTypes)) {
-      throw new \Exception($type . ' is not supported.');
+      return FALSE;
     }
     return TRUE;
   }
@@ -67,17 +67,16 @@ class InverseIdentity {
    * @param string $type
    * @param mixed $value
    * @return boolean
-   * @throws Exception
    */
   protected function validateValue($type, $value) {
     if ($type == 'account') {
       if (!is_array($value)) {
-        throw new \Exception($type . ' must be an array.');
+        return FALSE;
       }
     } 
     else {
       if (is_array($value)) {
-        throw new \Exception($type . ' must be a string.');
+        return FALSE;
       }
     }
     return TRUE;

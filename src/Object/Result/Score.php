@@ -40,7 +40,7 @@ class Score implements ObjectInterface {
    */
   protected function validateScaled($scaled) {
     if ($scaled < -1 && $scaled > 1) {
-      throw new Exception('scaled property is out of range.');
+      return FALSE;
     }
     return TRUE;
   }

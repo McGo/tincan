@@ -174,12 +174,11 @@ class Context {
    * 
    * @param array $extensions
    * @return boolean
-   * @throws Exception
    */
   protected function validateExtensions($extensions) {
     foreach ($extensions as $extension) {
       if (!$extension instanceof Extension) {
-        throw new Exception($extension . ' must be Extension instance.');
+        return FALSE;
       }
     }
     return TRUE;
