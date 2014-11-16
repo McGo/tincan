@@ -222,7 +222,7 @@ class Statement {
     if (!is_null($format)) {
       return $this->stored->format($format);
     } else {
-    //  return $this->stored;
+      return $this->stored;
     }
   }
 
@@ -259,5 +259,9 @@ class Statement {
       return $context->getRegistration();
     }
   }
-    
+
+  public function getTimestamp() {
+    return $this->timestamp;
+  }
+
 }
