@@ -141,4 +141,12 @@ class Result implements ObjectInterface {
     return $this->completion ? $true : $false;
   }
 
+  public function getScore() {
+    return $this->score;
+  }
+
+  public function getResponse() {
+    return $this->response;
+  }
+
 }

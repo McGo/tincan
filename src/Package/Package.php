@@ -21,6 +21,15 @@ class Package implements PackageInterface {
   public function getActivities() {
     return $this->xmlDoc->xpath('/x:tincan/x:activities/x:activity');
   }
+
+  /**
+   * @{inheritdoc}
+   */
+  public function getActivitiesByType($type) {
+    $result = $this->xmlDoc->xpath('(/x:tincan/x:activities/x:activity[@type=\'' .
+      $type . '\'])');
+    return $result;
+  }
   
   /**
    * Get the actity has child launch element

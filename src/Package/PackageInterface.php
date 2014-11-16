@@ -8,6 +8,11 @@ interface PackageInterface {
    * @return array
    */
   function getActivities();
+
+  /**
+   * @return array
+   */
+  function getActivitiesByType($type);
   
   /**
    * @return string

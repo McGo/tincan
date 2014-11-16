@@ -36,7 +36,6 @@ class Score implements ObjectInterface {
    * 
    * @param float $scaled
    * @return boolean
-   * @throws Exception
    */
   protected function validateScaled($scaled) {
     if ($scaled < -1 && $scaled > 1) {
@@ -84,5 +83,21 @@ class Score implements ObjectInterface {
     }
     $this->max = $max;
     $this->addArray(array('max' => $max));
+  }
+
+  public function getRaw() {
+    return $this->raw;
+  }
+
+  public function getScaled() {
+    return $this->scaled;
+  }
+
+  public function getMax() {
+    return $this->max;
+  }
+
+  public function getMin() {
+    return $this->min;
   }
 }
