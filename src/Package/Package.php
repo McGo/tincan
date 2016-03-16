@@ -3,6 +3,7 @@
 namespace GO1\LMS\TinCan\Package;
 
 use GO1\LMS\TinCan\TinCanAPI;
+use GO1\LMS\TinCan\Exception\SchemaFileNotLoadableException;
 
 class Package implements PackageInterface {
 
@@ -11,7 +12,9 @@ class Package implements PackageInterface {
 
   public function __construct($schemaFile) {
     $this->schemaFile = $schemaFile;
-    $this->xmlDoc = simplexml_load_file($schemaFile);
+    $xmlDoc = simplexml_load_file($schemaFile);
+    if (!$xmlDoc) throw new SchemaFileNotLoadableException("Schema file could not be loaded by simple xml.");
+    $this->xmlDoc = $xmlDoc;
     $this->xmlDoc->registerXPathNamespace('x', 'http://projecttincan.com/tincan.xsd');
   }
   
