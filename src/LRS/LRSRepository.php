@@ -79,7 +79,7 @@ class LRSRepository implements LRSRepositoryInterface {
    * @return string
    */
   protected function executeRequest(RequestInterface $request) {
-    $reponse;
+    $reponse = null;
     try {
       $reponse = $this->httpClient->send($request);
     }
